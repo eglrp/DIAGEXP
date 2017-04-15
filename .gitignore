@@ -27,3 +27,12 @@
 *.exe
 *.out
 *.app
+*.pdb
+*.ilk
+*.opendb
+*.db
+*.idb
+/DIAGEXP/Debug/DIAGEXP.tlog
+*.log
+*.ipch
+/.vs/DIAGEXP/v15
