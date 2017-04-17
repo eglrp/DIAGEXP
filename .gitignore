@@ -36,3 +36,4 @@
 *.log
 *.ipch
 /.vs/DIAGEXP/v15
+/DIAGEXP/x64/Debug/DIAGEXP.tlog

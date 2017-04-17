@@ -64,7 +64,7 @@ Pipe::Pipe(char * com) {
 
 Pipe::~Pipe() {
 	//创建内核对象使用完之后一定记得关闭，有可能会产生内存泄露
-	this->setPipeOn(false);
+	this->setPipeOn(false);//关闭了所有资源，这个作者的习惯不好，因为不指定this指针的缘故，写的代码不好理解。
 	this->setStatus(-1);
 	CloseHandle(hThrisLoop);
 	CloseHandle(hThrLoop);
