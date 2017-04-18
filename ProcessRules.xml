@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<document mainmodule="module_index" fvision="1.0">
+  <modulecollect>
+    <module index="sdfjskfjdk" type="regular">
+      <name>toplevel</name>
+      <innermap>
+        <branch index="branchnumber">
+          <name>branchname</name>
+          <input>
+            <elm>varindex1</elm>
+            <elm>varindex1</elm>
+            <elm>varindex1</elm>
+          </input>
+          <output>
+            <elm>varindex1</elm>
+            <elm>varindex1</elm>
+            <elm>varindex1</elm>
+          </output>
+        </branch>
+      </innermap>
+      <varcollect>
+        <var index="sdkfjksdjf" type="arguments/pipe/array/list/collect……" accessable="branchnumber/module/global">
+          <name>variablename</name>
+        </var>
+      </varcollect>
+    </module>
+  </modulecollect>
+  <relatecollect>
+    <ralate branchnumber="branchnum" sourcemodule="nodeindex1" destinationmodule="nodeindex2">
+      <elmpair destination="endmodule.varindex1"> headmodule.varindex1</elmpair>
+    </ralate>
+  </relatecollect>
+</document>
