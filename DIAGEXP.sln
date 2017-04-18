@@ -7,13 +7,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Processor", "SubClient\SubC
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SilentCtrl", "CtrlClient\CtrlClient.vcxproj", "{6831F2E8-D78E-49EC-8DB4-00DB36B1B12B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIAGEXP", "DIAGEXP\DIAGEXP.csproj", "{47530165-7532-441F-8C55-B6AFD7955297}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{26F836B1-4613-467C-B80A-64BA2834D14D}"
 	ProjectSection(SolutionItems) = preProject
 		ProcessRules.xml = ProcessRules.xml
 		ReadMe.txt = ReadMe.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIAGEXP", "DIAGEXP\DIAGEXP.csproj", "{47530165-7532-441F-8C55-B6AFD7955297}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
