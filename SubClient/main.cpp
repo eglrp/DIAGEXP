@@ -19,5 +19,14 @@ int main(int argc, char* argv[]) {
 	}
 
 	//以下开始工作
+	FileOperate *foperate = new FileOperate();
 	DataModel *model = new DataModel();
+	ModelProcessor *processor = new ModelProcessor();
+	OperateAccept *cmdAccepted = new OperateAccept();
+
+	foperate->EnsureProcFileExist(argv[2]);//确保一定存在一个合法的数据模型文件
+
+
+
+	return 0;
 }

@@ -26,7 +26,7 @@
     </module>
   </modulecollect>
   <relatecollect>
-    <ralate branchnumber="branchnum" sourcemodule="nodeindex1" destinationmodule="nodeindex2">
+    <ralate relate_id="akfsd" branchnumber="branchnum" sourcemodule="nodeindex1" destinationmodule="nodeindex2">
       <elmpair destination="endmodule.varindex1"> headmodule.varindex1</elmpair>
     </ralate>
   </relatecollect>

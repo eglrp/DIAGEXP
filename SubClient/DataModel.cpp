@@ -3,6 +3,7 @@
 
 
 DataModel::DataModel()
+	: doc(NULL)
 {
 }
 
