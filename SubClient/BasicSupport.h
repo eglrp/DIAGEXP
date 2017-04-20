@@ -1,5 +1,5 @@
-#ifndef PROGRAMONCE_HEADER
-#define PROGRAMONCE_HEADER
+#ifndef BASICSUPPORT_MACRO
+#define BASICSUPPORT_MACRO
 
 //引入标准库模块
 #include<iostream>

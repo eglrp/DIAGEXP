@@ -1,5 +1,7 @@
-#pragma once
-#include <iostream>
+#ifndef OPERATEACCEPT_MACRO
+#define OPERATEACCEPT_MACRO
+
+#include "BasicSupport.h"
 
 
 class OperateAccept
@@ -11,3 +13,4 @@ public:
 	virtual int GetAGroupMsg(char* msgGroupsSpliter);
 };
 
+#endif

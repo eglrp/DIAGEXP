@@ -1,4 +1,11 @@
-#pragma once
+#ifndef DATAMODEL_MACRO
+#define DATAMODEL_MACRO
+
+#include "BasicSupport.h"
+
+
+
+
 class DataModel
 {
 public:
@@ -8,3 +15,4 @@ public:
 	virtual int InitModel(char* procFilePath);
 };
 
+#endif

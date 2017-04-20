@@ -1,4 +1,6 @@
-#pragma once
+#ifndef FILEOPERATE_MACRO
+#define FILEOPERATE_MACRO
+
 #include "BasicSupport.h"
 
 class FileOperate
@@ -12,3 +14,4 @@ public:
 	virtual int EnsureProcFileExist(char* procFilePath);
 };
 
+#endif 
