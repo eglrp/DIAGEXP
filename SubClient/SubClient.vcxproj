@@ -23,7 +23,7 @@
     <ProjectGuid>{025F61B1-00F9-44EA-B9B7-2673F98336E0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>SubClient</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
     <ProjectName>Processor</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -140,10 +140,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="modelandmcontrol.cpp" />
+    <ClCompile Include="..\ThirdPackage\tinystr.cpp" />
+    <ClCompile Include="..\ThirdPackage\tinyxml.cpp" />
+    <ClCompile Include="..\ThirdPackage\tinyxmlerror.cpp" />
+    <ClCompile Include="..\ThirdPackage\tinyxmlparser.cpp" />
+    <ClCompile Include="DataModel.cpp" />
+    <ClCompile Include="FileOperate.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="ModelProcessor.cpp" />
+    <ClCompile Include="OperateAccept.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="includecommon.h" />
+    <ClInclude Include="..\ThirdPackage\tinystr.h" />
+    <ClInclude Include="..\ThirdPackage\tinyxml.h" />
+    <ClInclude Include="DataModel.h" />
+    <ClInclude Include="FileOperate.h" />
+    <ClInclude Include="BasicSupport.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="ModelProcessor.h" />
+    <ClInclude Include="OperateAccept.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

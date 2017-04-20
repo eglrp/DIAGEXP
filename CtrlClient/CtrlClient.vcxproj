@@ -23,7 +23,7 @@
     <ProjectGuid>{6831F2E8-D78E-49EC-8DB4-00DB36B1B12B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>CtrlClient</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
     <ProjectName>SilentCtrl</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
