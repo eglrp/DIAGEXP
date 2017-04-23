@@ -18,11 +18,19 @@
 
 //自定义数据文件标签名
 #define DOC_ROOT_ELM_TAG "document"
+#define PROCESSRULE_VERSION_TAG "fvision"
+#define MAINMODULE_TAG "mainmodule"
+
 #define MODULE_COLLECTION_TAG "modulecollect"
-#define RELATE_COLLECTION_TAG "relatecollect"
+#define ELM_SURFACE_NAME "name"
+#define MODULE_ELM_TAG "module"
 #define MODULE_ID_TAG	"m_id"
 #define BRANCH_COLLECTION_TAG "innermap"
-#define MAINMODULE_TAG "mainmodule"
-#define PROCESSRULE_VERSION_TAG "fvision"
+#define BRANCH_ID_TAG	"b_id"
+#define VAR_COLLECTION_TAG "varcollect"
+#define VAR_ID_TAG "v_id"
+
+
+#define RELATE_COLLECTION_TAG "relatecollect"
 
 #endif

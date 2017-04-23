@@ -45,7 +45,13 @@ int DataModel::LocateModule(char* m_id, TiXmlElement** moduleElmRef)
 int DataModel::LocateBranch(TiXmlElement* moduleElm, char* b_id, TiXmlElement** branchElmRef)
 {
 	TiXmlElement* branchC = moduleElm->FirstChildElement(BRANCH_COLLECTION_TAG);
+	TiXmlElement* branchOne = branchC->FirstChildElement();
 	
+	while (strcmp(branchOne->Attribute(BRANCH_ID_TAG), b_id)) {
+		branchOne = branchOne->NextSiblingElement();
+	}
+
+	*branchElmRef = branchOne;
 
 	return 0;
 }
@@ -54,6 +60,15 @@ int DataModel::LocateBranch(TiXmlElement* moduleElm, char* b_id, TiXmlElement** 
 // 定位属于模块的变量节点
 int DataModel::LocateVariable(TiXmlElement* moduleElm, char* v_id, TiXmlElement** varElmRef)
 {
+	TiXmlElement* variableC = moduleElm->FirstChildElement(VAR_COLLECTION_TAG);
+	TiXmlElement* varOne = variableC->FirstChildElement();
+
+	while (strcmp(varOne->Attribute(VAR_ID_TAG), v_id)) {
+		varOne = varOne->NextSiblingElement();
+	}
+	
+	*varElmRef = varOne;
+
 	return 0;
 }
 

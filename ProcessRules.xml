@@ -4,7 +4,7 @@
     <module m_id="sdfjskfjdk" type="regular">
       <name>toplevel</name>
       <innermap>
-        <branch index="branchnumber">
+        <branch b_id="branchnumber">
           <name>branchname</name>
           <input>
             <elm>varindex1</elm>
@@ -19,7 +19,7 @@
         </branch>
       </innermap>
       <varcollect>
-        <var index="sdkfjksdjf" type="arguments/pipe/array/list/collect……" accessable="branchnumber/module/global">
+        <var v_id="sdkfjksdjf" type="arguments/pipe/array/list/collect……" accessable="branchnumber/module/global">
           <name>variablename</name>
         </var>
       </varcollect>
