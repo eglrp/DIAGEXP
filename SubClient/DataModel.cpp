@@ -28,10 +28,10 @@ int DataModel::InitModel(char* procFilePath)
 // 定位一个模块节点
 int DataModel::LocateModule(char* m_id, TiXmlElement** moduleElmRef)
 {
-	TiXmlElement* moduleC = this->RootElm->FirstChildElement("modulecollect");
+	TiXmlElement* moduleC = this->RootElm->FirstChildElement(MODULE_COLLECTION_TAG);
 	TiXmlElement* moduleOne = moduleC->FirstChildElement();
 
-	while (strcmp(moduleOne->Attribute("m_id"), m_id)) {
+	while (strcmp(moduleOne->Attribute(MODULE_ID_TAG), m_id)) {
 		moduleOne = moduleOne->NextSiblingElement();
 	}
 
@@ -44,6 +44,9 @@ int DataModel::LocateModule(char* m_id, TiXmlElement** moduleElmRef)
 // 定位一个模块的branch节点
 int DataModel::LocateBranch(TiXmlElement* moduleElm, char* b_id, TiXmlElement** branchElmRef)
 {
+	TiXmlElement* branchC = moduleElm->FirstChildElement(BRANCH_COLLECTION_TAG);
+	
+
 	return 0;
 }
 
