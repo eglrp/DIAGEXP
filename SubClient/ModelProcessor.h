@@ -32,6 +32,8 @@ COMMANDLINE UPDATE:
 						(module_id=asdf;var_id=sdfad;)		accessablily=branch/module/global;
 	RELATE_UPDATE:		(relate_id=adfad;)					elmap=[to.var1:somemodule.var2;];
 **
+COMMANDLINE SAVE_AS:
+	SAVE_AS:			(NONE;)								NONE;
 **/
 
 #ifndef MODELPROCESSOR_MACRO
@@ -62,6 +64,9 @@ private:
 public:
 	// 进入循环消息处理过程
 	virtual int Loop();
+	// 将数据模型另存为数据文件，如果输入参数为空，表示保存到原文件
+	// example   SAVE_AS:(NONE;)NONE;
+	virtual int _save_as(std::string filePath);
 };
 
 #endif

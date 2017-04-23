@@ -86,6 +86,9 @@ int ModelProcessor::Loop()
 		{
 			this->_update(cmdline);
 		}
+		else if (operate_words.find("SAVE_AS") != string::npos) {
+			this->_save_as(cmdline);
+		}
 		else {
 			this->IOport->WriteOut("ERROR: <" + cmdline + "> Illegal Operate Error !");
 		}
@@ -96,5 +99,12 @@ int ModelProcessor::Loop()
 
 	this->IOport->WriteOut("$$Process_Exit");
 
+	return 0;
+}
+
+
+// 将数据模型另存为数据文件，如果输入参数为空，表示保存到原文件
+int ModelProcessor::_save_as(std::string filePath)
+{
 	return 0;
 }
