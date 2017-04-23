@@ -34,6 +34,8 @@ public:
 	// 如果第一次调用该方法或者id与上次调用不同，模型从头遍历节点树，
 	// 如果两次调用相同，模型紧跟着上次结果取下一个节点。
 	virtual int GetNextOneOfRelates(char* module_branch_id, TiXmlElement** relateRef);
+private:
+	TiXmlElement* previousRelate;
 };
 
 #endif

@@ -6,6 +6,7 @@ DataModel::DataModel()
 {
 	doc = new TiXmlDocument();
 	RootElm = nullptr;
+	previousRelate = nullptr;
 }
 
 
@@ -92,8 +93,25 @@ int DataModel::GetRelate(char* r_id, TiXmlElement** relateRef)
 // 根据指定的分支id，获取属于该分支的下一个节点，有状态方法
 int DataModel::GetNextOneOfRelates(char* module_branch_id, TiXmlElement** relateRef)
 {
-	TiXmlElement* relateC = this->RootElm->FirstChildElement(RELATE_COLLECTION_TAG);
-	TiXmlElement* relateOne = relateC->FirstChildElement();
+	TiXmlElement* relateOne = nullptr;
+
+	if (this->previousRelate != nullptr &&
+		!strcmp(this->previousRelate->Attribute(RELATE_BRANCH_MAP_TAG), module_branch_id)) {
+		relateOne = this->previousRelate->NextSiblingElement();
+	}
+	else {
+		TiXmlElement* relateC = this->RootElm->FirstChildElement(RELATE_COLLECTION_TAG);
+		relateOne = relateC->FirstChildElement();
+	}
+
+
+
+	while (strcmp(relateOne->Attribute(RELATE_BRANCH_MAP_TAG), module_branch_id)) {
+		relateOne = relateOne->NextSiblingElement();
+	}
+
+	*relateRef = relateOne;
+	this->previousRelate = relateOne;
 
 	return 0;
 }
