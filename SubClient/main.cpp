@@ -22,11 +22,12 @@ int main(int argc, char* argv[]) {
 	FileOperate *foperate = new FileOperate();
 	DataModel *model = new DataModel();
 	ModelProcessor *processor = new ModelProcessor();
-	OperateAccept *cmdAccepted = new OperateAccept();
+	OperateAccept *IO_Port = new OperateAccept();
 
 	foperate->EnsureProcFileExist(argv[2]);//确保一定存在一个合法的数据模型文件
 	model->InitModel(argv[2]);// 载入数据模型文件
-
+	processor->InitProcessor(model, IO_Port);//装载基础设施
+	processor->Loop();//进入消息循环处理过程
 
 
 	return 0;
