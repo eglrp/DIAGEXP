@@ -29,11 +29,11 @@ private:
 	TiXmlElement* RootElm;
 public:
 	// 精确获取一个relate节点，relate节点是一个次级节点，因此利用R_id可以唯一确定
-	virtual int GetRelate(char* r_id);
+	virtual int GetRelate(char* r_id, TiXmlElement** relateRef);
 	// 根据指定的分支id，获取属于该分支的下一个节点，有状态方法
 	// 如果第一次调用该方法或者id与上次调用不同，模型从头遍历节点树，
 	// 如果两次调用相同，模型紧跟着上次结果取下一个节点。
-	virtual int GetNextOneOfRelates(char* module_branch_id);
+	virtual int GetNextOneOfRelates(char* module_branch_id, TiXmlElement** relateRef);
 };
 
 #endif

@@ -32,5 +32,7 @@
 
 
 #define RELATE_COLLECTION_TAG "relatecollect"
+#define RELATE_ELM_TAG "relate"
+#define RELATE_ID_TAG "relate_id"
 
 #endif

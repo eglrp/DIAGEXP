@@ -74,14 +74,26 @@ int DataModel::LocateVariable(TiXmlElement* moduleElm, char* v_id, TiXmlElement*
 
 
 // 精确获取一个relate节点，relate节点是一个次级节点，因此利用R_id可以唯一确定
-int DataModel::GetRelate(char* r_id)
+int DataModel::GetRelate(char* r_id, TiXmlElement** relateRef)
 {
+	TiXmlElement* relateC = this->RootElm->FirstChildElement(RELATE_COLLECTION_TAG);
+	TiXmlElement* relateOne = relateC->FirstChildElement();
+
+	while (strcmp(relateOne->Attribute(RELATE_ID_TAG), r_id)){
+		relateOne = relateOne->NextSiblingElement();
+	}
+	
+	*relateRef = relateOne;
+
 	return 0;
 }
 
 
 // 根据指定的分支id，获取属于该分支的下一个节点，有状态方法
-int DataModel::GetNextOneOfRelates(char* module_branch_id)
+int DataModel::GetNextOneOfRelates(char* module_branch_id, TiXmlElement** relateRef)
 {
+	TiXmlElement* relateC = this->RootElm->FirstChildElement(RELATE_COLLECTION_TAG);
+	TiXmlElement* relateOne = relateC->FirstChildElement();
+
 	return 0;
 }
