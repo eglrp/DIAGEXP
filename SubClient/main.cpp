@@ -25,6 +25,7 @@ int main(int argc, char* argv[]) {
 	OperateAccept *cmdAccepted = new OperateAccept();
 
 	foperate->EnsureProcFileExist(argv[2]);//确保一定存在一个合法的数据模型文件
+	model->InitModel(argv[2]);// 载入数据模型文件
 
 
 
