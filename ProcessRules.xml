@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <document mainmodule="module_index" fvision="1.0">
   <modulecollect>
-    <module index="sdfjskfjdk" type="regular">
+    <module m_id="sdfjskfjdk" type="regular">
       <name>toplevel</name>
       <innermap>
         <branch index="branchnumber">
@@ -26,8 +26,8 @@
     </module>
   </modulecollect>
   <relatecollect>
-    <ralate relate_id="akfsd" branchnumber="branchnum" sourcemodule="nodeindex1" destinationmodule="nodeindex2">
-      <elmpair destination="endmodule.varindex1"> headmodule.varindex1</elmpair>
+    <ralate relate_id="akfsd" branchnumber="module.branch" sourcemodule="module.branch" destinationmodule="module.branch2">
+      <elmpair end="endmodule.varindex1"> headmodule.varindex1</elmpair>
     </ralate>
   </relatecollect>
 </document>
