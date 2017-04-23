@@ -2,6 +2,10 @@
 
 using namespace std;
 
+#define OPERATE_WORDS 0
+#define CONDITION 1
+#define SUPPLEMENT 2
+
 
 ModelProcessor::ModelProcessor()
 	: IOport(nullptr)
@@ -22,11 +26,29 @@ int ModelProcessor::InitProcessor(DataModel* model, OperateAccept* port)
 	return 0;
 }
 
-
-// “增加”操作统一处理
+ 
+/*“增加”操作统一处理
+COMMANDLINE ADD
+	MODULE_ADD :		(NONE;)				module_id = sdf; module_type = sfsfdf;
+	BRANCH_ADD:			(module_id = sdf;)	branch_id = adfd;
+	VARIABLE_ADD:		(module_id = sdf;)	var_id = asdf; type = asdkfj; accessablily = sdfsf;
+	RELATE_ADD:			(NONE;)				relate_id = asdf; branch = sdfddf; from = adkjfl; to = alflskd;
+RESULT:
+	SUCCESS:S3 key and value
+	ERROR : what and why
+*/
 int ModelProcessor::_add(std::string cmdline)
 {
-	this->IOport->WriteOut("add_"+cmdline);
+	string operate_words = cmdline.substr(0, cmdline.find(":"));
+	if (operate_words.find("MODULE") != string::npos) {
+
+	}
+	else if (operate_words.find("BRANCH") != string::npos) {
+
+	}
+
+
+
 	return 0;
 }
 
@@ -49,6 +71,13 @@ int ModelProcessor::_query(std::string cmdline)
 int ModelProcessor::_update(std::string cmdline)
 {
 	this->IOport->WriteOut("update_" + cmdline);
+	return 0;
+}
+
+
+// 将数据模型另存为数据文件，如果输入参数为空，表示保存到原文件
+int ModelProcessor::_save_as(std::string filePath)
+{
 	return 0;
 }
 
@@ -103,8 +132,55 @@ int ModelProcessor::Loop()
 }
 
 
-// 将数据模型另存为数据文件，如果输入参数为空，表示保存到原文件
-int ModelProcessor::_save_as(std::string filePath)
+// 根据输入选择性的提取值，如果输入命令没有值，返回nullptr
+int ModelProcessor::_parse_cmd_line(std::string cmdline, int kind, std::string key, std::string* value)
 {
+	switch (kind)
+	{
+	case OPERATE_WORDS:
+		*value = cmdline.substr(0, cmdline.find(":"));
+		break;
+
+	case CONDITION: {
+			string condition_array = cmdline.substr(cmdline.find("(") + 1, cmdline.find(")"));
+			
+			if (condition_array == "NONE;") {
+				*value = nullptr;
+				return 0;
+			}
+
+			if (condition_array.find(key) == string::npos) {
+				*value = nullptr;
+				return -1;
+			}
+
+			string contain_val = condition_array.substr(condition_array.find(key));
+			string val = contain_val.substr(contain_val.find("="), contain_val.find(";"));
+
+			*value = val;
+		}
+		break;
+
+	case SUPPLEMENT: {
+			string supplement = cmdline.substr(cmdline.find(")") + 1);
+
+			if (supplement == "NONE;") {
+				*value = nullptr;
+				return 0;
+			}
+
+			if (supplement.find(key) == string::npos) {
+				*value = nullptr;
+				return -1;
+			}
+
+			string contain_val = supplement.substr(supplement.find(key));
+			string val = contain_val.substr(contain_val.find("="), contain_val.find(";"));
+
+			*value = val;
+		}
+		break;
+	}
+
 	return 0;
 }

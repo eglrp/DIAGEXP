@@ -67,6 +67,8 @@ public:
 	// 将数据模型另存为数据文件，如果输入参数为空，表示保存到原文件
 	// example   SAVE_AS:(NONE;)NONE;
 	virtual int _save_as(std::string filePath);
+	// 根据输入选择性的提取值，如果输入命令没有值，返回nullptr
+	virtual int _parse_cmd_line(std::string cmdline, int kind, std::string key, std::string* value);
 };
 
 #endif
