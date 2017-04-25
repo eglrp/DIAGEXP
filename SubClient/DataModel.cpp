@@ -27,12 +27,12 @@ int DataModel::InitModel(char* procFilePath)
 
 
 // 定位一个模块节点
-int DataModel::LocateModule(char* m_id, TiXmlElement** moduleElmRef)
+int DataModel::LocateModule(const char * m_id, TiXmlElement** moduleElmRef)
 {
 	TiXmlElement* moduleC = this->RootElm->FirstChildElement(MODULE_COLLECTION_TAG);
 	TiXmlElement* moduleOne = moduleC->FirstChildElement();
 
-	while (strcmp(moduleOne->Attribute(MODULE_ID_TAG), m_id)) {
+	while (moduleOne != nullptr && strcmp(moduleOne->Attribute(MODULE_ID_TAG), m_id)) {
 		moduleOne = moduleOne->NextSiblingElement();
 	}
 
@@ -48,7 +48,7 @@ int DataModel::LocateBranch(TiXmlElement* moduleElm, char* b_id, TiXmlElement** 
 	TiXmlElement* branchC = moduleElm->FirstChildElement(BRANCH_COLLECTION_TAG);
 	TiXmlElement* branchOne = branchC->FirstChildElement();
 	
-	while (strcmp(branchOne->Attribute(BRANCH_ID_TAG), b_id)) {
+	while (branchOne != nullptr && strcmp(branchOne->Attribute(BRANCH_ID_TAG), b_id)) {
 		branchOne = branchOne->NextSiblingElement();
 	}
 
@@ -64,7 +64,7 @@ int DataModel::LocateVariable(TiXmlElement* moduleElm, char* v_id, TiXmlElement*
 	TiXmlElement* variableC = moduleElm->FirstChildElement(VAR_COLLECTION_TAG);
 	TiXmlElement* varOne = variableC->FirstChildElement();
 
-	while (strcmp(varOne->Attribute(VAR_ID_TAG), v_id)) {
+	while (varOne != nullptr && strcmp(varOne->Attribute(VAR_ID_TAG), v_id)) {
 		varOne = varOne->NextSiblingElement();
 	}
 	
@@ -80,7 +80,7 @@ int DataModel::GetRelate(char* r_id, TiXmlElement** relateRef)
 	TiXmlElement* relateC = this->RootElm->FirstChildElement(RELATE_COLLECTION_TAG);
 	TiXmlElement* relateOne = relateC->FirstChildElement();
 
-	while (strcmp(relateOne->Attribute(RELATE_ID_TAG), r_id)){
+	while (relateOne != nullptr && strcmp(relateOne->Attribute(RELATE_ID_TAG), r_id)){
 		relateOne = relateOne->NextSiblingElement();
 	}
 	
@@ -113,5 +113,26 @@ int DataModel::GetNextOneOfRelates(char* module_branch_id, TiXmlElement** relate
 	*relateRef = relateOne;
 	this->previousRelate = relateOne;
 
+	return 0;
+}
+
+
+// 添加module
+int DataModel::AddModule(char* m_id, char* type)
+{
+	return 0;
+}
+
+
+// 添加relate节点
+int DataModel::AddRelate(char* relate_id, char* branch_map, char* from, char* to)
+{
+	return 0;
+}
+
+
+// 修改模型属性
+int DataModel::ModifyModel(int prop, char* value)
+{
 	return 0;
 }

@@ -18,7 +18,7 @@ private:
 public:
 	// 定位一个模块节点
 	// 模块节点是一个次级节点，可以由一个id直接确定
-	virtual int LocateModule(char* m_id, TiXmlElement** moduleElmRef);
+	virtual int LocateModule(const char * m_id, TiXmlElement** moduleElmRef);
 	// 定位一个模块的branch节点
 	// branch节点是一个三级节点需要由module_id与branch_id共同确定
 	virtual int LocateBranch(TiXmlElement* moduleElm, char* b_id, TiXmlElement** branchElmRef);
@@ -36,6 +36,13 @@ public:
 	virtual int GetNextOneOfRelates(char* module_branch_id, TiXmlElement** relateRef);
 private:
 	TiXmlElement* previousRelate;
+public:
+	// 添加module
+	virtual int AddModule(char* m_id, char* type);
+	// 添加relate节点
+	virtual int AddRelate(char* relate_id, char* branch_map, char* from, char* to);
+	// 修改模型属性
+	virtual int ModifyModel(int prop, char* value);
 };
 
 #endif

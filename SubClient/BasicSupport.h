@@ -5,11 +5,17 @@
 #include<iostream>
 #include<fstream>
 #include<string>
+#include<sstream>
+
+#include <stdlib.h>
+
 
 
 //引入第三方模块：tinyxml
 #include "../ThirdPackage/tinystr.h"
 #include "../ThirdPackage/tinyxml.h"
+
+
 
 
 #include "StandardMacroDefined.h"

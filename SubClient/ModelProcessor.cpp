@@ -31,7 +31,7 @@ int ModelProcessor::InitProcessor(DataModel* model, OperateAccept* port)
 COMMANDLINE ADD
 	MODULE_ADD :		(NONE;)				module_id = sdf; module_type = sfsfdf;
 	BRANCH_ADD:			(module_id = sdf;)	branch_id = adfd;
-	VARIABLE_ADD:		(module_id = sdf;)	var_id = asdf; type = asdkfj; accessablily = sdfsf;
+	VARIABLE_ADD:		(module_id = sdf;)	variable_id = asdf; type = asdkfj; accessablily = sdfsf;
 	RELATE_ADD:			(NONE;)				relate_id = asdf; branch = sdfddf; from = adkjfl; to = alflskd;
 RESULT:
 	SUCCESS:S3 key and value
@@ -39,15 +39,39 @@ RESULT:
 */
 int ModelProcessor::_add(std::string cmdline)
 {
-	string operate_words = cmdline.substr(0, cmdline.find(":"));
+	string operate_words = " ";
+	this->_parse_cmd_line(cmdline, OPERATE_WORDS, "", &operate_words);
+
 	if (operate_words.find("MODULE") != string::npos) {
+		string module_id,module_type;
+		this->_parse_cmd_line(cmdline, SUPPLEMENT, "module_id", &module_id);
+		this->_parse_cmd_line(cmdline, SUPPLEMENT, "module_type", &module_type);
+
+		TiXmlElement* elm=nullptr;
+		do {
+			this->modelptr->LocateModule(module_id.c_str(), &elm);//elm为null，表明没有满足要求的节点
+			if (elm != NULL) {//已存在该节点，换一个id重新搜索
+				// 特殊处理
+				stringstream buf;
+				buf << rand();
+				module_id = module_id + buf.str();
+			}
+		}while (elm != NULL);
+
+		// 添加节点
+
+
 
 	}
 	else if (operate_words.find("BRANCH") != string::npos) {
 
 	}
+	else if (operate_words.find("VARIABLE") != string::npos) {
 
+	}
+	else if (operate_words.find("RELATE") != string::npos) {
 
+	}
 
 	return 0;
 }
@@ -142,7 +166,7 @@ int ModelProcessor::_parse_cmd_line(std::string cmdline, int kind, std::string k
 		break;
 
 	case CONDITION: {
-			string condition_array = cmdline.substr(cmdline.find("(") + 1, cmdline.find(")"));
+			string condition_array = cmdline.substr(cmdline.find("(") + 1, cmdline.find(")")- cmdline.find("(")-1);
 			
 			if (condition_array == "NONE;") {
 				*value = nullptr;
@@ -155,7 +179,7 @@ int ModelProcessor::_parse_cmd_line(std::string cmdline, int kind, std::string k
 			}
 
 			string contain_val = condition_array.substr(condition_array.find(key));
-			string val = contain_val.substr(contain_val.find("="), contain_val.find(";"));
+			string val = contain_val.substr(contain_val.find("=")+1, contain_val.find(";")- contain_val.find("=")-1);
 
 			*value = val;
 		}
@@ -175,7 +199,7 @@ int ModelProcessor::_parse_cmd_line(std::string cmdline, int kind, std::string k
 			}
 
 			string contain_val = supplement.substr(supplement.find(key));
-			string val = contain_val.substr(contain_val.find("="), contain_val.find(";"));
+			string val = contain_val.substr(contain_val.find("=")+1, contain_val.find(";")- contain_val.find("=") - 1);
 
 			*value = val;
 		}
