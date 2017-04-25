@@ -38,11 +38,13 @@ private:
 	TiXmlElement* previousRelate;
 public:
 	// 添加module
-	virtual int AddModule(char* m_id, char* type);
+	virtual int AddModule(const char * m_id, const char * type);
 	// 添加relate节点
 	virtual int AddRelate(char* relate_id, char* branch_map, char* from, char* to);
 	// 修改模型属性
-	virtual int ModifyModel(int prop, char* value);
+	virtual int ModifyMainModule(char* value);
+	static int Model_Mainmodule;
+	static int Model_ParseVision;
 };
 
 #endif

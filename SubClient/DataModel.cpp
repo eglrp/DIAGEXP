@@ -118,8 +118,16 @@ int DataModel::GetNextOneOfRelates(char* module_branch_id, TiXmlElement** relate
 
 
 // 添加module
-int DataModel::AddModule(char* m_id, char* type)
+int DataModel::AddModule(const char * m_id, const char * type)
 {
+	TiXmlElement* moduleC = this->RootElm->FirstChildElement(MODULE_COLLECTION_TAG);
+	
+	TiXmlElement* moduleOne = new TiXmlElement(MODULE_ELM_TAG);
+	moduleOne->SetAttribute(MODULE_ID_TAG, m_id);
+	moduleOne->SetAttribute(MODULE_TYPE_TAG, type);
+
+	moduleC->LinkEndChild(moduleOne);
+
 	return 0;
 }
 
@@ -127,12 +135,26 @@ int DataModel::AddModule(char* m_id, char* type)
 // 添加relate节点
 int DataModel::AddRelate(char* relate_id, char* branch_map, char* from, char* to)
 {
+	TiXmlElement* relateC = this->RootElm->FirstChildElement(RELATE_COLLECTION_TAG);
+
+	TiXmlElement* relateOne = new TiXmlElement(RELATE_ELM_TAG);
+	relateOne->SetAttribute(RELATE_ID_TAG, relate_id);
+	relateOne->SetAttribute(RELATE_BRANCH_MAP_TAG, branch_map);
+	relateOne->SetAttribute(RELATE_BEGIN, from);
+	relateOne->SetAttribute(RELATE_END, to);
+
+	relateC->LinkEndChild(relateOne);
+
 	return 0;
 }
 
 
 // 修改模型属性
-int DataModel::ModifyModel(int prop, char* value)
+int DataModel::ModifyMainModule(char* value)
 {
+	this->RootElm->SetAttribute(MAINMODULE_TAG, value);
+			
 	return 0;
 }
+
+int DataModel::Model_Mainmodule = 0;

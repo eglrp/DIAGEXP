@@ -59,9 +59,9 @@ int ModelProcessor::_add(std::string cmdline)
 		}while (elm != NULL);
 
 		// Ìí¼Ó½Úµã
+		this->modelptr->AddModule(module_id.c_str(), module_type.c_str());
 
-
-
+		this->IOport->WriteOut(string("SUCCESS:module_id=")+ module_id);
 	}
 	else if (operate_words.find("BRANCH") != string::npos) {
 

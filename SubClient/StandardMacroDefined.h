@@ -10,9 +10,10 @@
 #define MAINMODULE_TAG "mainmodule"
 
 #define MODULE_COLLECTION_TAG "modulecollect"
-#define ELM_SURFACE_NAME "name"
+#define ELM_MAPPED_NAME "name"
 #define MODULE_ELM_TAG "module"
 #define MODULE_ID_TAG	"m_id"
+#define MODULE_TYPE_TAG "type"
 #define BRANCH_COLLECTION_TAG "innermap"
 #define BRANCH_ID_TAG	"b_id"
 #define VAR_COLLECTION_TAG "varcollect"
@@ -23,10 +24,14 @@
 #define RELATE_ELM_TAG "relate"
 #define RELATE_ID_TAG "relate_id"
 #define RELATE_BRANCH_MAP_TAG "branch_map"
+#define RELATE_BEGIN "from"
+#define RELATE_END "to"
 
 
-
+//操作与命令标准宏
 #define PROCESS_EXIT_MSG "$$Process_Exit"
+#define MODULE_ID "module_id"
+
 
 
 #endif
