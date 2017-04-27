@@ -43,37 +43,105 @@ int ModelProcessor::_add(std::string cmdline)
 	this->_parse_cmd_line(cmdline, OPERATE_WORDS, "", &operate_words);
 
 	if (operate_words.find("MODULE") != string::npos) {
-		string module_id,module_type;
-		this->_parse_cmd_line(cmdline, SUPPLEMENT, "module_id", &module_id);
-		this->_parse_cmd_line(cmdline, SUPPLEMENT, "module_type", &module_type);
-
-		TiXmlElement* elm=nullptr;
-		do {
-			this->modelptr->LocateModule(module_id.c_str(), &elm);//elm为null，表明没有满足要求的节点
-			if (elm != NULL) {//已存在该节点，换一个id重新搜索
-				// 特殊处理
-				stringstream buf;
-				buf << rand();
-				module_id = module_id + buf.str();
-			}
-		}while (elm != NULL);
-
-		// 添加节点
-		this->modelptr->AddModule(module_id.c_str(), module_type.c_str());
-
-		this->IOport->WriteOut(string("SUCCESS:module_id=")+ module_id);
+		Add_Module(cmdline);
 	}
 	else if (operate_words.find("BRANCH") != string::npos) {
-
+		int retval = Add_Branch(cmdline);
+		if (retval) return retval;
 	}
 	else if (operate_words.find("VARIABLE") != string::npos) {
-
+		bool retflag;
+		int retval = Add_Variable(cmdline, retflag);
+		if (retflag) return retval;
 	}
 	else if (operate_words.find("RELATE") != string::npos) {
 
 	}
 
 	return 0;
+}
+
+int ModelProcessor::Add_Variable(std::string &cmdline, bool &retflag)
+{
+	retflag = true;
+	string module_id, variable_id, type, accessablily;
+	this->_parse_cmd_line(cmdline, CONDITION, "module_id", &module_id);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, "variable_id", &variable_id);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, "type", &type);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, "accessablily", &accessablily);
+
+	TiXmlElement* elm = nullptr;
+	this->modelptr->LocateModule(module_id.c_str(), &elm);
+	if (elm == NULL) {
+		this->IOport->WriteOut("ERROR: <module_id=" + module_id + "> not exist!");
+		return -1;
+	}
+
+	TiXmlElement* v_elm = nullptr;
+	do {
+		this->modelptr->LocateVariable(elm, variable_id.c_str(), &v_elm);
+		if (v_elm != NULL) {
+			stringstream buf;
+			buf << rand();
+			variable_id += buf.str();
+		}
+	} while (v_elm != NULL);
+
+	this->modelptr->AddVariable(elm, variable_id.c_str(), type.c_str(), accessablily.c_str());
+	this->IOport->WriteOut("SUCCESS: <module_id=" + module_id + ";variable_id=" + variable_id + ">");
+	retflag = false;
+	return {};
+}
+
+int ModelProcessor::Add_Branch(std::string &cmdline)
+{
+	string module_id, branch_id;
+	this->_parse_cmd_line(cmdline, CONDITION, "module_id", &module_id);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, "branch_id", &branch_id);
+
+	TiXmlElement* elm = nullptr;
+	this->modelptr->LocateModule(module_id.c_str(), &elm);
+	if (elm == NULL) {
+		this->IOport->WriteOut("ERROR: <module_id=" + module_id + "> not exist!");
+		return -1;
+	}
+	TiXmlElement* b_elm = nullptr;
+	do {
+		this->modelptr->LocateBranch(elm, branch_id.c_str(), &b_elm);
+		if (b_elm != NULL) {
+			stringstream buf;
+			buf << rand();
+			branch_id = branch_id + buf.str();
+		}
+	} while (b_elm != NULL);
+
+	this->modelptr->AddBranch(elm, branch_id.c_str());
+
+	this->IOport->WriteOut("SUCCESS: <module_id=" + module_id + ";branch_id=" + branch_id + ">");
+	return 0;
+}
+
+void ModelProcessor::Add_Module(std::string &cmdline)
+{
+	string module_id, module_type;
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, "module_id", &module_id);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, "module_type", &module_type);
+
+	TiXmlElement* elm = nullptr;
+	do {
+		this->modelptr->LocateModule(module_id.c_str(), &elm);//elm为null，表明没有满足要求的节点
+		if (elm != NULL) {//已存在该节点，换一个id重新搜索
+						  // 特殊处理
+			stringstream buf;
+			buf << rand();
+			module_id = module_id + buf.str();
+		}
+	} while (elm != NULL);
+
+	// 添加节点
+	this->modelptr->AddModule(module_id.c_str(), module_type.c_str());
+
+	this->IOport->WriteOut(string("SUCCESS: <module_id=") + module_id + ">");
 }
 
 
