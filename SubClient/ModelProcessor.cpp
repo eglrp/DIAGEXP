@@ -170,7 +170,7 @@ void ModelProcessor::Add_Module(std::string &cmdline)
 COMMANDLINE REMOVE:
 	MODULE_REMOVE:		(module_id=sdf;)					NONE;
 	BRANCH_REMOVE:		(module_id=asdfsf;branch_id=asdf;)	NONE;
-	VARIABLE_REMOVE:	(module_id=asdjdf;var_id=sdfsf;)	NONE;
+	VARIABLE_REMOVE:	(module_id=asdj;variable_id=sdfd;)	NONE;
 	RELATE_REMOVE:		(relate_id=sdfasdf;)				NONE;
 RESULT:
 	SUCCESS:<key=value> Already removed;
@@ -198,9 +198,32 @@ int ModelProcessor::_remove(std::string cmdline)
 		if (retflag) return retval;
 	}
 	else if (operate_words.find("RELATE") != string::npos) {
-
+		bool retflag;
+		int retval = Remove_Relate(cmdline, retflag);
+		if (retflag) return retval;
 	}
 	return 0;
+}
+
+int ModelProcessor::Remove_Relate(std::string &cmdline, bool &retflag)
+{
+	retflag = true;
+	string relate_id("");
+	this->_parse_cmd_line(cmdline, CONDITION, "relate_id", &relate_id);
+
+	TiXmlElement* relate_node(nullptr);
+	this->modelptr->LocateRelate(relate_id.c_str(), &relate_node);
+
+	if (relate_node == NULL) {
+		this->IOport->WriteOut("ERROR:<relate_id=" + relate_id + "> Relate isn't exist!");
+		return -1;
+	}
+
+	relate_node->Parent()->RemoveChild(relate_node);
+
+	this->IOport->WriteOut("SUCCESS: <relate_id=" + relate_id + "> Relate already removed!");
+	retflag = false;
+	return {};
 }
 
 int ModelProcessor::Remove_Variable(std::string &cmdline, bool &retflag)

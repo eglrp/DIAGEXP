@@ -72,6 +72,7 @@ public:
 	void Add_Module(std::string &cmdline);
 	// 删除 操作，统一处理
 	virtual int _remove(std::string cmdline);
+	int Remove_Relate(std::string &cmdline, bool &retflag);
 	int Remove_Variable(std::string &cmdline, bool &retflag);
 	int Remove_Branch(std::string &cmdline, bool &retflag);
 	int Remove_Module(std::string &cmdline, bool &retflag);
