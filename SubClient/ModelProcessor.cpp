@@ -166,18 +166,26 @@ void ModelProcessor::Add_Module(std::string &cmdline)
 	this->IOport->WriteOut(string("SUCCESS: <module_id=") + module_id + ">");
 }
 
-
+/*
+COMMANDLINE REMOVE:
+	MODULE_REMOVE:		(module_id=sdf;)					NONE;
+	BRANCH_REMOVE:		(module_id=asdfsf;branch_id=asdf;)	NONE;
+	VARIABLE_REMOVE:	(module_id=asdjdf;var_id=sdfsf;)	NONE;
+	RELATE_REMOVE:		(relate_id=sdfasdf;)				NONE;
+RESULT:
+	SUCCESS:<key=value> Already removed;
+	ERROR:<key=value> error why;
+*/
 // 删除 操作，统一处理
 int ModelProcessor::_remove(std::string cmdline)
 {
 	string operate_words = " ";
 	this->_parse_cmd_line(cmdline, OPERATE_WORDS, "", &operate_words);
 
-	if (operate_words.find("MODEL") != string::npos) {
-
-	}
-	else if (operate_words.find("MODULE") != string::npos) {
-
+	if (operate_words.find("MODULE") != string::npos) {
+		bool retflag;
+		int retval = Remove_Module(cmdline, retflag);
+		if (retflag) return retval;
 	}
 	else if (operate_words.find("BRANCH") != string::npos) {
 
@@ -189,6 +197,27 @@ int ModelProcessor::_remove(std::string cmdline)
 
 	}
 	return 0;
+}
+
+int ModelProcessor::Remove_Module(std::string &cmdline, bool &retflag)
+{
+	retflag = true;
+	string module_id("");
+	this->_parse_cmd_line(cmdline, CONDITION, "module_id", &module_id);
+
+	TiXmlElement* module_node(nullptr);
+	this->modelptr->LocateModule(module_id.c_str(), &module_node);
+
+	if (module_node == NULL) {
+		this->IOport->WriteOut("ERROR:<module_id=" + module_id + "> Module isn't exist!");
+		return -1;
+	}
+
+	module_node->Parent()->RemoveChild(module_node);
+
+	this->IOport->WriteOut("SUCCESS: <module_id=" + module_id + "> Module already removed!");
+	retflag = false;
+	return {};
 }
 
 

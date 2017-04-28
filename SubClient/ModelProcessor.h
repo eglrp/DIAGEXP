@@ -17,6 +17,11 @@ COMMANDLINE REMOVE:
 	BRANCH_REMOVE:		(module_id=asdfsf;branch_id=asdf;)	NONE;
 	VARIABLE_REMOVE:	(module_id=asdjdf;var_id=sdfsf;)	NONE;
 	RELATE_REMOVE:		(relate_id=sdfasdf;)				NONE;
+RESULT:
+	SUCCESS:<key=value> Already removed;
+	ERROR:<key=value> error why;
+
+
 
 COMMANDLINE QUERY:
 	MODEL_QUERY:		(NONE;)								NONE;
@@ -67,6 +72,7 @@ public:
 	void Add_Module(std::string &cmdline);
 	// 删除 操作，统一处理
 	virtual int _remove(std::string cmdline);
+	int Remove_Module(std::string &cmdline, bool &retflag);
 	virtual int _query(std::string cmdline);
 	virtual int _update(std::string cmdline);
 private:
