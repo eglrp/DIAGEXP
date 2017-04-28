@@ -188,15 +188,83 @@ int ModelProcessor::_remove(std::string cmdline)
 		if (retflag) return retval;
 	}
 	else if (operate_words.find("BRANCH") != string::npos) {
-
+		bool retflag;
+		int retval = Remove_Branch(cmdline, retflag);
+		if (retflag) return retval;
 	}
 	else if (operate_words.find("VARIABLE") != string::npos) {
-
+		bool retflag;
+		int retval = Remove_Variable(cmdline, retflag);
+		if (retflag) return retval;
 	}
 	else if (operate_words.find("RELATE") != string::npos) {
 
 	}
 	return 0;
+}
+
+int ModelProcessor::Remove_Variable(std::string &cmdline, bool &retflag)
+{
+	retflag = true;
+	string module_id(""), variable_id("");
+	this->_parse_cmd_line(cmdline, CONDITION, "module_id", &module_id);
+	this->_parse_cmd_line(cmdline, CONDITION, "variable_id", &variable_id);
+
+	TiXmlElement* module_node(nullptr);
+	this->modelptr->LocateModule(module_id.c_str(), &module_node);
+
+	if (module_node == NULL) {
+		this->IOport->WriteOut("ERROR:<module_id=" + module_id + ";> Module isn't exist!");
+		return -1;
+	}
+
+	TiXmlElement* variable_node(nullptr);
+	this->modelptr->LocateVariable(module_node, variable_id.c_str(), &variable_node);
+
+	if (variable_node == NULL) {
+		this->IOport->WriteOut("ERROR:<module_id=" + module_id +
+			";variable_id=" + variable_id + ";> Variable isn't exist!");
+		return -1;
+	}
+
+	variable_node->Parent()->RemoveChild(variable_node);
+
+	this->IOport->WriteOut("SUCCESS:<module_id=" + module_id +
+		";variable_id=" + variable_id + ";> Variable already removed.");
+	retflag = false;
+	return {};
+}
+
+int ModelProcessor::Remove_Branch(std::string &cmdline, bool &retflag)
+{
+	retflag = true;
+	string module_id(""), branch_id("");
+	this->_parse_cmd_line(cmdline, CONDITION, "module_id", &module_id);
+	this->_parse_cmd_line(cmdline, CONDITION, "branch_id", &branch_id);
+
+	TiXmlElement* module_node(nullptr);
+	this->modelptr->LocateModule(module_id.c_str(), &module_node);
+
+	if (module_node == NULL) {
+		this->IOport->WriteOut("ERROR:<module_id=" + module_id + ";> Module isn't exist!");
+		return -1;
+	}
+
+	TiXmlElement* branch_node(nullptr);
+	this->modelptr->LocateBranch(module_node, branch_id.c_str(), &branch_node);
+
+	if (branch_node == NULL) {
+		this->IOport->WriteOut("ERROR:<module_id=" + module_id +
+			";branch_id=" + branch_id + ";> Branch isn't exist!");
+		return -1;
+	}
+
+	branch_node->Parent()->RemoveChild(branch_node);
+
+	this->IOport->WriteOut("SUCCESS:<module_id=" + module_id +
+		";branch_id=" + branch_id + ";> Branch already removed.");
+	retflag = false;
+	return {};
 }
 
 int ModelProcessor::Remove_Module(std::string &cmdline, bool &retflag)

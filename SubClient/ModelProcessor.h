@@ -72,6 +72,8 @@ public:
 	void Add_Module(std::string &cmdline);
 	// 删除 操作，统一处理
 	virtual int _remove(std::string cmdline);
+	int Remove_Variable(std::string &cmdline, bool &retflag);
+	int Remove_Branch(std::string &cmdline, bool &retflag);
 	int Remove_Module(std::string &cmdline, bool &retflag);
 	virtual int _query(std::string cmdline);
 	virtual int _update(std::string cmdline);
