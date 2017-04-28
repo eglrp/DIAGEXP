@@ -47,6 +47,8 @@ public:
 	virtual int AddBranch(TiXmlElement* mountable, const char * branch_id);
 	// 添加一个variable节点，人工确保唯一性
 	virtual int AddVariable(TiXmlElement* mountable, const char * varibale_id, const char * type, const char * accessible);
+	// 打印模型自身，是一个测试方法，并非常用方法
+	virtual int _print_itself();
 };
 
 #endif

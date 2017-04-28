@@ -15,7 +15,7 @@
 #include "../ThirdPackage/tinystr.h"
 #include "../ThirdPackage/tinyxml.h"
 
-
+void dump_to_stdout(TiXmlNode* pParent, unsigned int indent = 0);
 
 
 #include "StandardMacroDefined.h"

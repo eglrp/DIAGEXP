@@ -177,7 +177,24 @@ int ModelProcessor::_remove(std::string cmdline)
 
 int ModelProcessor::_query(std::string cmdline)
 {
-	this->IOport->WriteOut("query_" + cmdline);
+	string operate_words = " ";
+	this->_parse_cmd_line(cmdline, OPERATE_WORDS, "", &operate_words);
+
+	if (operate_words.find("MODEL") != string::npos) {
+		this->modelptr->_print_itself();
+	}
+	else if (operate_words.find("MODULE") != string::npos) {
+
+	}
+	else if (operate_words.find("BRANCH") != string::npos) {
+		
+	}
+	else if (operate_words.find("VARIABLE") != string::npos) {
+		
+	}
+	else if (operate_words.find("RELATE") != string::npos) {
+		
+	}
 	return 0;
 }
 

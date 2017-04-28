@@ -3,25 +3,27 @@
 **指令格式 执行命令[目标类别_执行操作]：(限定条件集合；)添加属性条目；
 **================指令清单与响应=====================
 COMMANDLINE ADD
-	MODULE_ADD:			(NONE;)			module_id=sdf;module_type=sfsfdf;
-	BRANCH_ADD:			(module_id=sdf;)branch_id=adfd;
-	VARIABLE_ADD:		(module_id=sdf;)var_id=asdf;type=asdkfj;accessablily=sdfsf;
-	RELATE_ADD:			(NONE;)			relate_id=asdf;branch=sdfddf;from=adkjfl;to=alflskd;
+	MODULE_ADD :		(NONE;)				module_id = sdf; module_type = sfsfdf;
+	BRANCH_ADD:			(module_id = sdf;)	branch_id = adfd;
+	VARIABLE_ADD:		(module_id = sdf;)	variable_id = asdf; type = asdkfj; accessablily = sdfsf;
+	RELATE_ADD:			(NONE;)				relate_id = asdf; branch_map = sdfddf; from = adkjfl; to = alflskd;
 RESULT:
 	SUCCESS:S3 key and value
-	ERROR:  what and why
+	ERROR : what and why
 
 
 COMMANDLINE REMOVE:
-	MODULE_REMOVE:		(module_id=sdf;)					NONE
-	BRANCH_REMOVE:		(module_id=asdfsf;branch_id=asdf;)	NONE
-	VARIABLE_REMOVE:	(module_id=asdjdf;var_id=sdfsf;)	NONE
-	RELATE_REMOVE:		(relate_id=sdfasdf;)				NONE
+	MODULE_REMOVE:		(module_id=sdf;)					NONE;
+	BRANCH_REMOVE:		(module_id=asdfsf;branch_id=asdf;)	NONE;
+	VARIABLE_REMOVE:	(module_id=asdjdf;var_id=sdfsf;)	NONE;
+	RELATE_REMOVE:		(relate_id=sdfasdf;)				NONE;
 
 COMMANDLINE QUERY:
-	BRANCH_QUERY:		(branch_id=adfadf;)	NONE
+	MODEL_QUERY:		(NONE;)								NONE;
+	BRANCH_QUERY:		(branch_id=adfadf;)					NONE;
 	MODULE_QUERY:
 	VARIABLE_QUERY:
+	RELATE_QUERY:
 
 
 COMMANDLINE UPDATE:

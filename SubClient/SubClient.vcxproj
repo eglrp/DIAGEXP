@@ -145,6 +145,7 @@
     <ClCompile Include="..\ThirdPackage\tinyxmlerror.cpp" />
     <ClCompile Include="..\ThirdPackage\tinyxmlparser.cpp" />
     <ClCompile Include="DataModel.cpp" />
+    <ClCompile Include="external.cpp" />
     <ClCompile Include="FileOperate.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModelProcessor.cpp" />
