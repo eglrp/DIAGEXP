@@ -32,7 +32,7 @@ COMMANDLINE ADD
 	MODULE_ADD :		(NONE;)				module_id = sdf; module_type = sfsfdf;
 	BRANCH_ADD:			(module_id = sdf;)	branch_id = adfd;
 	VARIABLE_ADD:		(module_id = sdf;)	variable_id = asdf; type = asdkfj; accessablily = sdfsf;
-	RELATE_ADD:			(NONE;)				relate_id = asdf; branch = sdfddf; from = adkjfl; to = alflskd;
+	RELATE_ADD:			(NONE;)				relate_id = asdf; branch_map = sdfddf; from = adkjfl; to = alflskd;
 RESULT:
 	SUCCESS:S3 key and value
 	ERROR : what and why
@@ -55,10 +55,32 @@ int ModelProcessor::_add(std::string cmdline)
 		if (retflag) return retval;
 	}
 	else if (operate_words.find("RELATE") != string::npos) {
-
+		Add_Relate(cmdline);
 	}
 
 	return 0;
+}
+
+void ModelProcessor::Add_Relate(std::string &cmdline)
+{
+	string relate_id, branch_map, from, to;
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, "relate_id", &relate_id);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, "branch_map", &branch_map);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, "from", &from);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, "to", &to);
+
+	TiXmlElement* relate = nullptr;
+	do {
+		this->modelptr->LocateRelate(relate_id.c_str(), &relate);
+		if (relate != NULL) {
+			stringstream buf;
+			buf << rand();
+			relate_id += buf.str();
+		}
+	} while (relate != NULL);
+
+	this->modelptr->AddRelate(relate_id.c_str(), branch_map.c_str(), from.c_str(), to.c_str());
+	this->IOport->WriteOut("SUCCESS: <relate_id=" + relate_id + ">");
 }
 
 int ModelProcessor::Add_Variable(std::string &cmdline, bool &retflag)

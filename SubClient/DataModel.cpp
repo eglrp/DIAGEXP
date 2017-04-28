@@ -75,7 +75,7 @@ int DataModel::LocateVariable(TiXmlElement* moduleElm, const char * v_id, TiXmlE
 
 
 // 精确获取一个relate节点，relate节点是一个次级节点，因此利用R_id可以唯一确定
-int DataModel::LocateRelate(char* r_id, TiXmlElement** relateRef)
+int DataModel::LocateRelate(const char* r_id, TiXmlElement** relateRef)
 {
 	TiXmlElement* relateC = this->RootElm->FirstChildElement(RELATE_COLLECTION_TAG);
 	TiXmlElement* relateOne = relateC->FirstChildElement();
@@ -198,7 +198,7 @@ int DataModel::AddVariable(TiXmlElement* mountable, const char * varibale_id, co
 
 
 // 添加relate节点
-int DataModel::AddRelate(char* relate_id, char* branch_map, char* from, char* to)
+int DataModel::AddRelate(const char * relate_id, const char * branch_map, const char * from, const char * to)
 {
 	TiXmlElement* relateC = this->RootElm->FirstChildElement(RELATE_COLLECTION_TAG);
 

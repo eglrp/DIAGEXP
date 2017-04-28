@@ -55,6 +55,7 @@ private:
 public:
 	// “增加”操作统一处理
 	virtual int _add(std::string cmdline);
+	void Add_Relate(std::string &cmdline);
 	int Add_Variable(std::string &cmdline, bool &retflag);
 	int Add_Branch(std::string &cmdline);
 	void Add_Module(std::string &cmdline);
