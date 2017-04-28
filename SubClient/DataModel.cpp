@@ -220,3 +220,16 @@ int DataModel::_print_itself()
 	dump_to_stdout(this->RootElm);
 	return 0;
 }
+
+
+// ±£´æ
+int DataModel::SaveFile(const char* filePath)
+{
+	if (!strcmp(filePath, "default")) {
+		this->doc->SaveFile();
+	}
+	else {
+		this->doc->SaveFile(filePath);
+	}
+	return 0;
+}

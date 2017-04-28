@@ -170,7 +170,24 @@ void ModelProcessor::Add_Module(std::string &cmdline)
 // 删除 操作，统一处理
 int ModelProcessor::_remove(std::string cmdline)
 {
-	this->IOport->WriteOut("remove_" + cmdline);
+	string operate_words = " ";
+	this->_parse_cmd_line(cmdline, OPERATE_WORDS, "", &operate_words);
+
+	if (operate_words.find("MODEL") != string::npos) {
+
+	}
+	else if (operate_words.find("MODULE") != string::npos) {
+
+	}
+	else if (operate_words.find("BRANCH") != string::npos) {
+
+	}
+	else if (operate_words.find("VARIABLE") != string::npos) {
+
+	}
+	else if (operate_words.find("RELATE") != string::npos) {
+
+	}
 	return 0;
 }
 
@@ -201,14 +218,51 @@ int ModelProcessor::_query(std::string cmdline)
 
 int ModelProcessor::_update(std::string cmdline)
 {
-	this->IOport->WriteOut("update_" + cmdline);
+	string operate_words = " ";
+	this->_parse_cmd_line(cmdline, OPERATE_WORDS, "", &operate_words);
+
+	if (operate_words.find("MODEL") != string::npos) {
+
+	}
+	else if (operate_words.find("MODULE") != string::npos) {
+
+	}
+	else if (operate_words.find("BRANCH") != string::npos) {
+
+	}
+	else if (operate_words.find("VARIABLE") != string::npos) {
+
+	}
+	else if (operate_words.find("RELATE") != string::npos) {
+
+	}
 	return 0;
 }
 
 
+/*
+COMMANDLINE SAVE_AS:
+	SAVE_AS:			(NONE;)								NONE;
+	SAVE_AS:			(NONE;)								filepath=C:\Program File\slkdjf;
+RESULT:
+	SUCCESS:<filepath=default;>Already saved.
+	ERROR: <filepath=aldkjfaldf;> Can not be saved.
+*/
 // 将数据模型另存为数据文件，如果输入参数为空，表示保存到原文件
-int ModelProcessor::_save_as(std::string filePath)
+int ModelProcessor::_save_as(std::string cmdline)
 {
+	string filepath;
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, "filepath", &filepath);
+
+	if (filepath == "") {
+		this->modelptr->SaveFile("default");
+		this->IOport->WriteOut("SUCCESS: <filepath=default> File already saved.");
+	}
+	else {
+		this->modelptr->SaveFile(filepath.c_str());
+		this->IOport->WriteOut("SUCCESS: <filepath=" + filepath + "> File already saved.");
+	}
+
 	return 0;
 }
 
@@ -276,12 +330,12 @@ int ModelProcessor::_parse_cmd_line(std::string cmdline, int kind, std::string k
 			string condition_array = cmdline.substr(cmdline.find("(") + 1, cmdline.find(")")- cmdline.find("(")-1);
 			
 			if (condition_array == "NONE;") {
-				*value = nullptr;
+				*value = "";
 				return 0;
 			}
 
 			if (condition_array.find(key) == string::npos) {
-				*value = nullptr;
+				*value = "";
 				return -1;
 			}
 
@@ -296,12 +350,12 @@ int ModelProcessor::_parse_cmd_line(std::string cmdline, int kind, std::string k
 			string supplement = cmdline.substr(cmdline.find(")") + 1);
 
 			if (supplement == "NONE;") {
-				*value = nullptr;
+				*value = "";
 				return 0;
 			}
 
 			if (supplement.find(key) == string::npos) {
-				*value = nullptr;
+				*value = "";
 				return -1;
 			}
 

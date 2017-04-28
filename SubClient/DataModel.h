@@ -49,6 +49,8 @@ public:
 	virtual int AddVariable(TiXmlElement* mountable, const char * varibale_id, const char * type, const char * accessible);
 	// 打印模型自身，是一个测试方法，并非常用方法
 	virtual int _print_itself();
+	// 保存
+	virtual int SaveFile(const char* filePath);
 };
 
 #endif

@@ -1,1 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?><document mainmodule="unknown" fvision="1.0.0"><modulecollect></modulecollect><relatecollect></relatecollect></document>
+<?xml version="1.0" encoding="utf-8" ?>
+<document mainmodule="unknown" fvision="1.0.0">
+    <modulecollect>
+        <module m_id="asdf" type="regular">
+            <name>unnamed</name>
+            <innermap />
+            <varcollect />
+        </module>
+    </modulecollect>
+    <relatecollect />
+</document>
