@@ -26,7 +26,7 @@ int FileOperate::EnsureProcFileExist(char* procFilePath)
 
 		tfile
 			<< "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
-			<< "<" <<DOC_ROOT_ELM_TAG<<" "<<MAINMODULE_TAG<<"=\"unknown\" "<<PROCESSRULE_VERSION_TAG<<"=\""<<PROCESSRULE_VERSION<<"\">"
+			<< "<" <<DOC_ROOT_ELM_TAG<<" "<<MAINBRANCH_TAG<<"=\"unknown\" "<<PROCESSRULE_VERSION_TAG<<"=\""<<PROCESSRULE_VERSION<<"\">"
 			<< "<" << MODULE_COLLECTION_TAG << ">"
 			<< "</"<< MODULE_COLLECTION_TAG << ">"
 			<< "<" << RELATE_COLLECTION_TAG << ">"

@@ -51,6 +51,8 @@ public:
 	virtual int _print_itself();
 	// ±£¥Ê
 	virtual int SaveFile(const char* filePath);
+	// ≤È—Ømainbranch
+	virtual int QueryMainModule(std::string * mainBranch);
 };
 
 #endif

@@ -311,14 +311,44 @@ int ModelProcessor::Remove_Module(std::string &cmdline, bool &retflag)
 	return {};
 }
 
+/*
 
+COMMANDLINE QUERY:
+	MODEL_QUERY:		(NONE;)								NONE;
+															query=mainbranch;
+RESULT:
+	SUCCESS:<query=value> query success.
+
+COMMANDLINE QUERY:
+	MODULE_QUERY:		(module_id=asdfaf;)					NONE;
+RESULT:
+	SUCCESS:
+
+	BRANCH_QUERY:		(module_id=ada;branch_id=adf;)		NONE;
+
+	VARIABLE_QUERY:		(module_id=asd;variable_id=adf;)	NONE;
+
+	RELATE_QUERY:		(relate_id=sff;)					NONE;
+						(branch_map=asf;)					NONE;
+*/
 int ModelProcessor::_query(std::string cmdline)
 {
 	string operate_words = " ";
 	this->_parse_cmd_line(cmdline, OPERATE_WORDS, "", &operate_words);
 
+	//MODEL_QUERY:(NONE;)NONE;
+	//MODEL_QUERY:(NONE;)query=mainbranch
 	if (operate_words.find("MODEL") != string::npos) {
-		this->modelptr->_print_itself();
+		string search_value;
+		this->_parse_cmd_line(cmdline, SUPPLEMENT, "query", &search_value);
+		if (search_value == "") {
+			this->IOport->WriteOut("SUCCESS:<query=model_description> query success. \n");
+			this->modelptr->_print_itself();
+		}
+		else {
+			this->modelptr->QueryMainModule(&search_value);
+			this->IOport->WriteOut("SUCCESS:<query=" + search_value + "> query success.");
+		}
 	}
 	else if (operate_words.find("MODULE") != string::npos) {
 
@@ -335,7 +365,15 @@ int ModelProcessor::_query(std::string cmdline)
 	return 0;
 }
 
-
+/*
+COMMANDLINE UPDATE:
+	MODEL_UPDATE:		(NONE;)								mainmodule=asdfj;
+	MODULE_UPDATE:		(module_id=afaf;)					name=adfsf;
+	BRANCH_UPDATE:		(module_id=adff;branch_id=adfad;)	input(output)=[sdfjkd;skflsj;skdjfls;];
+	VARIABLE_UPDATE:	(module_id=adff;var_id=adfa;)		name=slkjf;
+						(module_id=asdf;var_id=sdfad;)		accessablily=branch/module/global;
+	RELATE_UPDATE:		(relate_id=adfad;)					elmap=[to.var1:somemodule.var2;];
+*/
 int ModelProcessor::_update(std::string cmdline)
 {
 	string operate_words = " ";

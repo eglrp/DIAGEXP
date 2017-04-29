@@ -120,7 +120,7 @@ int DataModel::LocateNextOneOfRelates(char* module_branch_map, TiXmlElement** re
 // 修改模型属性
 int DataModel::ModifyMainModule(char* value)
 {
-	this->RootElm->SetAttribute(MAINMODULE_TAG, value);
+	this->RootElm->SetAttribute(MAINBRANCH_TAG, value);
 			
 	return 0;
 }
@@ -231,5 +231,16 @@ int DataModel::SaveFile(const char* filePath)
 	else {
 		this->doc->SaveFile(filePath);
 	}
+	return 0;
+}
+
+
+// 查询mainbranch
+int DataModel::QueryMainModule(std::string * mainBranch)
+{
+	const char* value = this->RootElm->Attribute(MAINBRANCH_TAG);
+
+	*mainBranch = value;
+
 	return 0;
 }

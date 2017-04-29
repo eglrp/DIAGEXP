@@ -7,7 +7,7 @@
 //自定义数据文件标签名
 #define DOC_ROOT_ELM_TAG "document"
 #define PROCESSRULE_VERSION_TAG "fvision"
-#define MAINMODULE_TAG "mainmodule"
+#define MAINBRANCH_TAG "mainbranch_map"
 
 #define MODULE_COLLECTION_TAG "modulecollect"
 #define ELM_NAME_TAG "name"
