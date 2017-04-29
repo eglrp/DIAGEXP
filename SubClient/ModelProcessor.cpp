@@ -42,19 +42,19 @@ int ModelProcessor::_add(std::string cmdline)
 	string operate_words = " ";
 	this->_parse_cmd_line(cmdline, OPERATE_WORDS, "", &operate_words);
 
-	if (operate_words.find("MODULE") != string::npos) {
+	if (operate_words.find(OPERATE_OBJECT_MODULE) != string::npos) {
 		Add_Module(cmdline);
 	}
-	else if (operate_words.find("BRANCH") != string::npos) {
+	else if (operate_words.find(OPERATE_OBJECT_BRANCH) != string::npos) {
 		int retval = Add_Branch(cmdline);
 		if (retval) return retval;
 	}
-	else if (operate_words.find("VARIABLE") != string::npos) {
+	else if (operate_words.find(OPERATE_OBJECT_VARIABLE) != string::npos) {
 		bool retflag;
 		int retval = Add_Variable(cmdline, retflag);
 		if (retflag) return retval;
 	}
-	else if (operate_words.find("RELATE") != string::npos) {
+	else if (operate_words.find(OPERATE_OBJECT_RELATE) != string::npos) {
 		Add_Relate(cmdline);
 	}
 
@@ -64,10 +64,10 @@ int ModelProcessor::_add(std::string cmdline)
 void ModelProcessor::Add_Relate(std::string &cmdline)
 {
 	string relate_id, branch_map, from, to;
-	this->_parse_cmd_line(cmdline, SUPPLEMENT, "relate_id", &relate_id);
-	this->_parse_cmd_line(cmdline, SUPPLEMENT, "branch_map", &branch_map);
-	this->_parse_cmd_line(cmdline, SUPPLEMENT, "from", &from);
-	this->_parse_cmd_line(cmdline, SUPPLEMENT, "to", &to);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, OPERATE_FACTOR_RELATE_ID, &relate_id);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, OPERATE_FACTOR_RELATE_BRANCH_MAP, &branch_map);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, OPERATE_FACTOR_RELATE_FROM, &from);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, OPERATE_FACTOR_RELATE_TO, &to);
 
 	TiXmlElement* relate = nullptr;
 	do {
@@ -80,22 +80,22 @@ void ModelProcessor::Add_Relate(std::string &cmdline)
 	} while (relate != NULL);
 
 	this->modelptr->AddRelate(relate_id.c_str(), branch_map.c_str(), from.c_str(), to.c_str());
-	this->IOport->WriteOut("SUCCESS: <relate_id=" + relate_id + ">");
+	this->IOport->WriteOut("SUCCESS: <" + string(OPERATE_FACTOR_RELATE_ID) + "=" + relate_id + ";>");
 }
 
 int ModelProcessor::Add_Variable(std::string &cmdline, bool &retflag)
 {
 	retflag = true;
 	string module_id, variable_id, type, accessablily;
-	this->_parse_cmd_line(cmdline, CONDITION, "module_id", &module_id);
-	this->_parse_cmd_line(cmdline, SUPPLEMENT, "variable_id", &variable_id);
-	this->_parse_cmd_line(cmdline, SUPPLEMENT, "type", &type);
-	this->_parse_cmd_line(cmdline, SUPPLEMENT, "accessablily", &accessablily);
+	this->_parse_cmd_line(cmdline, CONDITION, OPERATE_FACTOR_MODULE_ID, &module_id);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, OPERATE_FACTOR_VARIABLE_ID, &variable_id);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, OPERATE_FACTOR_VARIABLE_TYPE, &type);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, OPERATE_FACTOR_VARIABLE_ACCESSABLE, &accessablily);
 
 	TiXmlElement* elm = nullptr;
 	this->modelptr->LocateModule(module_id.c_str(), &elm);
 	if (elm == NULL) {
-		this->IOport->WriteOut("ERROR: <module_id=" + module_id + "> not exist!");
+		this->IOport->WriteOut("ERROR: <" + string(OPERATE_FACTOR_MODULE_ID) + "=" + module_id + ";> not exist!");
 		return -1;
 	}
 
@@ -110,7 +110,8 @@ int ModelProcessor::Add_Variable(std::string &cmdline, bool &retflag)
 	} while (v_elm != NULL);
 
 	this->modelptr->AddVariable(elm, variable_id.c_str(), type.c_str(), accessablily.c_str());
-	this->IOport->WriteOut("SUCCESS: <module_id=" + module_id + ";variable_id=" + variable_id + ">");
+	this->IOport->WriteOut("SUCCESS: <" + string(OPERATE_FACTOR_MODULE_ID) + "="
+		+ module_id + ";"+string(OPERATE_FACTOR_VARIABLE_ID)+"=" + variable_id + ";>");
 	retflag = false;
 	return {};
 }
@@ -118,13 +119,13 @@ int ModelProcessor::Add_Variable(std::string &cmdline, bool &retflag)
 int ModelProcessor::Add_Branch(std::string &cmdline)
 {
 	string module_id, branch_id;
-	this->_parse_cmd_line(cmdline, CONDITION, "module_id", &module_id);
-	this->_parse_cmd_line(cmdline, SUPPLEMENT, "branch_id", &branch_id);
+	this->_parse_cmd_line(cmdline, CONDITION, OPERATE_FACTOR_MODULE_ID, &module_id);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, OPERATE_FACTOR_BRANCH_ID, &branch_id);
 
 	TiXmlElement* elm = nullptr;
 	this->modelptr->LocateModule(module_id.c_str(), &elm);
 	if (elm == NULL) {
-		this->IOport->WriteOut("ERROR: <module_id=" + module_id + "> not exist!");
+		this->IOport->WriteOut("ERROR: <" + string(OPERATE_FACTOR_MODULE_ID) + "=" + module_id + ";> not exist!");
 		return -1;
 	}
 	TiXmlElement* b_elm = nullptr;
@@ -139,15 +140,16 @@ int ModelProcessor::Add_Branch(std::string &cmdline)
 
 	this->modelptr->AddBranch(elm, branch_id.c_str());
 
-	this->IOport->WriteOut("SUCCESS: <module_id=" + module_id + ";branch_id=" + branch_id + ">");
+	this->IOport->WriteOut("SUCCESS: <" + string(OPERATE_FACTOR_MODULE_ID) + "=" + module_id + ";"
+		+string(OPERATE_FACTOR_BRANCH_ID)+"=" + branch_id + ";>");
 	return 0;
 }
 
 void ModelProcessor::Add_Module(std::string &cmdline)
 {
 	string module_id, module_type;
-	this->_parse_cmd_line(cmdline, SUPPLEMENT, "module_id", &module_id);
-	this->_parse_cmd_line(cmdline, SUPPLEMENT, "module_type", &module_type);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, OPERATE_FACTOR_MODULE_ID, &module_id);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, OPERATE_FACTOR_MODULE_TYPE, &module_type);
 
 	TiXmlElement* elm = nullptr;
 	do {
@@ -163,7 +165,7 @@ void ModelProcessor::Add_Module(std::string &cmdline)
 	// 添加节点
 	this->modelptr->AddModule(module_id.c_str(), module_type.c_str());
 
-	this->IOport->WriteOut(string("SUCCESS: <module_id=") + module_id + ">");
+	this->IOport->WriteOut(string("SUCCESS: <"+string(OPERATE_FACTOR_MODULE_ID)+"=") + module_id + ">");
 }
 
 /*
@@ -182,22 +184,22 @@ int ModelProcessor::_remove(std::string cmdline)
 	string operate_words = " ";
 	this->_parse_cmd_line(cmdline, OPERATE_WORDS, "", &operate_words);
 
-	if (operate_words.find("MODULE") != string::npos) {
+	if (operate_words.find(OPERATE_OBJECT_MODULE) != string::npos) {
 		bool retflag;
 		int retval = Remove_Module(cmdline, retflag);
 		if (retflag) return retval;
 	}
-	else if (operate_words.find("BRANCH") != string::npos) {
+	else if (operate_words.find(OPERATE_OBJECT_BRANCH) != string::npos) {
 		bool retflag;
 		int retval = Remove_Branch(cmdline, retflag);
 		if (retflag) return retval;
 	}
-	else if (operate_words.find("VARIABLE") != string::npos) {
+	else if (operate_words.find(OPERATE_OBJECT_VARIABLE) != string::npos) {
 		bool retflag;
 		int retval = Remove_Variable(cmdline, retflag);
 		if (retflag) return retval;
 	}
-	else if (operate_words.find("RELATE") != string::npos) {
+	else if (operate_words.find(OPERATE_OBJECT_RELATE) != string::npos) {
 		bool retflag;
 		int retval = Remove_Relate(cmdline, retflag);
 		if (retflag) return retval;
@@ -209,19 +211,19 @@ int ModelProcessor::Remove_Relate(std::string &cmdline, bool &retflag)
 {
 	retflag = true;
 	string relate_id("");
-	this->_parse_cmd_line(cmdline, CONDITION, "relate_id", &relate_id);
+	this->_parse_cmd_line(cmdline, CONDITION, OPERATE_FACTOR_VARIABLE_ID, &relate_id);
 
 	TiXmlElement* relate_node(nullptr);
 	this->modelptr->LocateRelate(relate_id.c_str(), &relate_node);
 
 	if (relate_node == NULL) {
-		this->IOport->WriteOut("ERROR:<relate_id=" + relate_id + "> Relate isn't exist!");
+		this->IOport->WriteOut("ERROR:<" + string(OPERATE_FACTOR_RELATE_ID) + "=" + relate_id + ";> Relate isn't exist!");
 		return -1;
 	}
 
 	relate_node->Parent()->RemoveChild(relate_node);
 
-	this->IOport->WriteOut("SUCCESS: <relate_id=" + relate_id + "> Relate already removed!");
+	this->IOport->WriteOut("SUCCESS: <" + string(OPERATE_FACTOR_RELATE_ID) + "=" + relate_id + ";> Relate already removed!");
 	retflag = false;
 	return {};
 }
@@ -230,14 +232,14 @@ int ModelProcessor::Remove_Variable(std::string &cmdline, bool &retflag)
 {
 	retflag = true;
 	string module_id(""), variable_id("");
-	this->_parse_cmd_line(cmdline, CONDITION, "module_id", &module_id);
-	this->_parse_cmd_line(cmdline, CONDITION, "variable_id", &variable_id);
+	this->_parse_cmd_line(cmdline, CONDITION, OPERATE_FACTOR_MODULE_ID, &module_id);
+	this->_parse_cmd_line(cmdline, CONDITION, OPERATE_FACTOR_VARIABLE_ID, &variable_id);
 
 	TiXmlElement* module_node(nullptr);
 	this->modelptr->LocateModule(module_id.c_str(), &module_node);
 
 	if (module_node == NULL) {
-		this->IOport->WriteOut("ERROR:<module_id=" + module_id + ";> Module isn't exist!");
+		this->IOport->WriteOut("ERROR:<"+string(OPERATE_FACTOR_MODULE_ID)+"=" + module_id + ";> Module isn't exist!");
 		return -1;
 	}
 
@@ -245,15 +247,15 @@ int ModelProcessor::Remove_Variable(std::string &cmdline, bool &retflag)
 	this->modelptr->LocateVariable(module_node, variable_id.c_str(), &variable_node);
 
 	if (variable_node == NULL) {
-		this->IOport->WriteOut("ERROR:<module_id=" + module_id +
-			";variable_id=" + variable_id + ";> Variable isn't exist!");
+		this->IOport->WriteOut("ERROR:<" + string(OPERATE_FACTOR_MODULE_ID) + "=" + module_id +";"+
+			OPERATE_FACTOR_VARIABLE_ID+"=" + variable_id + ";> Variable isn't exist!");
 		return -1;
 	}
 
 	variable_node->Parent()->RemoveChild(variable_node);
 
-	this->IOport->WriteOut("SUCCESS:<module_id=" + module_id +
-		";variable_id=" + variable_id + ";> Variable already removed.");
+	this->IOport->WriteOut("SUCCESS:<" + string(OPERATE_FACTOR_MODULE_ID) + "=" + module_id + ";"
+		+ string(OPERATE_FACTOR_VARIABLE_ID) + "=" + variable_id + ";> Variable already removed.");
 	retflag = false;
 	return {};
 }
@@ -262,14 +264,14 @@ int ModelProcessor::Remove_Branch(std::string &cmdline, bool &retflag)
 {
 	retflag = true;
 	string module_id(""), branch_id("");
-	this->_parse_cmd_line(cmdline, CONDITION, "module_id", &module_id);
-	this->_parse_cmd_line(cmdline, CONDITION, "branch_id", &branch_id);
+	this->_parse_cmd_line(cmdline, CONDITION, OPERATE_FACTOR_MODULE_ID, &module_id);
+	this->_parse_cmd_line(cmdline, CONDITION, OPERATE_FACTOR_BRANCH_ID, &branch_id);
 
 	TiXmlElement* module_node(nullptr);
 	this->modelptr->LocateModule(module_id.c_str(), &module_node);
 
 	if (module_node == NULL) {
-		this->IOport->WriteOut("ERROR:<module_id=" + module_id + ";> Module isn't exist!");
+		this->IOport->WriteOut("ERROR:<"+string(OPERATE_FACTOR_MODULE_ID)+"=" + module_id + ";> Module isn't exist!");
 		return -1;
 	}
 
@@ -277,15 +279,15 @@ int ModelProcessor::Remove_Branch(std::string &cmdline, bool &retflag)
 	this->modelptr->LocateBranch(module_node, branch_id.c_str(), &branch_node);
 
 	if (branch_node == NULL) {
-		this->IOport->WriteOut("ERROR:<module_id=" + module_id +
-			";branch_id=" + branch_id + ";> Branch isn't exist!");
+		this->IOport->WriteOut("ERROR:<"+string(OPERATE_FACTOR_MODULE_ID)+"=" + module_id + ";"+
+			string(OPERATE_FACTOR_BRANCH_ID) + "=" + branch_id + ";> Branch isn't exist!");
 		return -1;
 	}
 
 	branch_node->Parent()->RemoveChild(branch_node);
 
-	this->IOport->WriteOut("SUCCESS:<module_id=" + module_id +
-		";branch_id=" + branch_id + ";> Branch already removed.");
+	this->IOport->WriteOut("SUCCESS:<" + string(OPERATE_FACTOR_MODULE_ID) + "=" + module_id + ";" +
+		string(OPERATE_FACTOR_BRANCH_ID)+"=" + branch_id + ";> Branch already removed.");
 	retflag = false;
 	return {};
 }
@@ -294,42 +296,84 @@ int ModelProcessor::Remove_Module(std::string &cmdline, bool &retflag)
 {
 	retflag = true;
 	string module_id("");
-	this->_parse_cmd_line(cmdline, CONDITION, "module_id", &module_id);
+	this->_parse_cmd_line(cmdline, CONDITION, OPERATE_FACTOR_MODULE_ID, &module_id);
 
 	TiXmlElement* module_node(nullptr);
 	this->modelptr->LocateModule(module_id.c_str(), &module_node);
 
 	if (module_node == NULL) {
-		this->IOport->WriteOut("ERROR:<module_id=" + module_id + "> Module isn't exist!");
+		this->IOport->WriteOut("ERROR:<" + string(OPERATE_FACTOR_MODULE_ID) + "=" + module_id + ";> Module isn't exist!");
 		return -1;
 	}
 
 	module_node->Parent()->RemoveChild(module_node);
 
-	this->IOport->WriteOut("SUCCESS: <module_id=" + module_id + "> Module already removed!");
+	this->IOport->WriteOut("SUCCESS: <" + string(OPERATE_FACTOR_MODULE_ID) + "=" + module_id + ";> Module already removed!");
 	retflag = false;
 	return {};
 }
 
 /*
-
 COMMANDLINE QUERY:
 	MODEL_QUERY:		(NONE;)								NONE;
 															query=mainbranch;
 RESULT:
-	SUCCESS:<query=value> query success.
-
+	SUCCESS:<query=mainbranch> query success.
+	branch_id=adfasf;
+	ERROR:<query=mainbranch> mainbranch not exist.
+	----------------------------------------------------------------------------------------
 COMMANDLINE QUERY:
-	MODULE_QUERY:		(module_id=asdfaf;)					NONE;
+	MODULE_QUERY:		(module_id=asdfaf;)					query=description;
 RESULT:
-	SUCCESS:
+	SUCCESS:<module_id=asdfaf;> query success.
+	{name=sdfd;
+	 branch_list=[sdf,sdfs,dfas,asffd,sdfa];
+	 variable_list=[asdf,asdf,sdf,sdfa,sfsdf,asdfa];}
+	ERROR:<module_id=asdf;> module not exist.
+	 ---------------------------------------------------------------------------------------
+COMMANDLINE QUERY:
+	BRANCH_QUERY:		(module_id=ada;branch_id=adf;)		query=interface;
+															query=content;
+REUSLT:
+	SUCCESS:<module_id=ada;branch_id=adf;> query success.
+	{kind=interface;
+	name=adfadfsdf;
+	description=asdfaf;
+	input=[skjf,asdlkjf,asldkjf,asldfm,asdf,lslkj];
+	output=[asdjfk,asldjf,asdf,ad,adfa,dfa,dfadsf];}
 
-	BRANCH_QUERY:		(module_id=ada;branch_id=adf;)		NONE;
+	{kind=content;
+	 name=aldkjfadf;
+	 description=adfasdfasdf;
+	 link_node_branch=fasdfsd.asdkjj;link_relate=adfaf;
+	 link_node_branch=asdfaff.adffdf;link_relate=adfas;
+	 link_node_branch=asdfadf.adfadf;link_relate=asdff;
+	 ……
+	 link_node_branch=link_end;		link_relate=asdfa;}
 
+	ERROR:<module_id=ada;branch_id=adf;> branch not exist.
+	-----------------------------------------------------------------------------------------
+COMMANDLINE QUERY:
 	VARIABLE_QUERY:		(module_id=asd;variable_id=adf;)	NONE;
+RESULT:
+	SUCCESS:<module_id=asd;variable_id=ad;> query success.
+	{name=sdfad;
+	 description=sdfasdfa;
+	 type=asdfasdf;
+	 accessable=adfasdf;}
 
+	ERROR:<module_id=asd;variable_id=ad;> variable not exist.
+	-----------------------------------------------------------------------------------------
+COMMANDLINE QUERY:
 	RELATE_QUERY:		(relate_id=sff;)					NONE;
-						(branch_map=asf;)					NONE;
+RESULT:
+	SUCCESS:<relate_id=asdfad;> query success.
+	{from=asdfasdf.asdkjalkj;
+	 to=asdfasf;
+	 branch_map=asdfadf.asdfad;
+	 elm:to.var_id=from.var_id;
+	 elm:to.varasd=from.vadfaf;}
+	ERROR:<relate_id=adfadf;> relate not exist.
 */
 int ModelProcessor::_query(std::string cmdline)
 {
@@ -338,31 +382,110 @@ int ModelProcessor::_query(std::string cmdline)
 
 	//MODEL_QUERY:(NONE;)NONE;
 	//MODEL_QUERY:(NONE;)query=mainbranch
-	if (operate_words.find("MODEL") != string::npos) {
+	if (operate_words.find(OPERATE_OBJECT_MODEL) != string::npos) {
 		string search_value;
-		this->_parse_cmd_line(cmdline, SUPPLEMENT, "query", &search_value);
+		this->_parse_cmd_line(cmdline, SUPPLEMENT, OPERATE_FACTOR_QUERYKEY, &search_value);
 		if (search_value == "") {
-			this->IOport->WriteOut("SUCCESS:<query=model_description> query success. \n");
+			this->IOport->WriteOut("SUCCESS:<" + string(OPERATE_FACTOR_QUERYKEY) + "=model_description;> query success. \n");
 			this->modelptr->_print_itself();
 		}
-		else {
+		else if(search_value == "mainbranch"){
 			this->modelptr->QueryMainModule(&search_value);
-			this->IOport->WriteOut("SUCCESS:<query=" + search_value + "> query success.");
+			this->IOport->WriteOut("SUCCESS:<" + string(OPERATE_FACTOR_QUERYKEY) + "=" + search_value + ";> query success.\nbranch_id=" + search_value);
 		}
 	}
-	else if (operate_words.find("MODULE") != string::npos) {
+	/*
+	COMMANDLINE QUERY:
+		MODULE_QUERY:		(module_id=asdfaf;)					query=description;
+	RESULT:
+		SUCCESS:<module_id=asdfaf;> query success.
+		{name=sdfd;
+		 branch_list=[sdf,sdfs,dfas,asffd,sdfa,];
+		 variable_list=[asdf,asdf,sdf,sdfa,sfsdf,asdfa];}
+		ERROR:<module_id=asdf;> module not exist.*/
+	else if (operate_words.find(OPERATE_OBJECT_MODULE) != string::npos) {
+		bool retflag;
+		int retval = Query_Module(cmdline, retflag);
+		if (retflag) return retval;
+	}
+	/*COMMANDLINE QUERY:
+		BRANCH_QUERY:		(module_id=ada;branch_id=adf;)		query=interface;
+																query=content;
+	REUSLT:
+		SUCCESS:<module_id=ada;branch_id=adf;> query success.
+		{kind=interface;
+		 name=adfadfsdf;
+		 description=asdfaf;
+		 input=[skjf,asdlkjf,asldkjf,asldfm,asdf,lslkj];
+		 output=[asdjfk,asldjf,asdf,ad,adfa,dfa,dfadsf];}
+
+		{kind=content;
+		 name=aldkjfadf;
+		 description=adfasdfasdf;
+		 link_node_branch=fasdfsd.asdkjj;link_relate=adfaf;
+		 link_node_branch=asdfaff.adffdf;link_relate=adfas;
+		 link_node_branch=asdfadf.adfadf;link_relate=asdff;
+		 ……
+		 link_node_branch=link_end;		link_relate=asdfa;}
+
+		ERROR:<module_id=ada;branch_id=adf;> branch not exist.
+	*/
+	else if (operate_words.find(OPERATE_OBJECT_BRANCH) != string::npos) {
+		string module_id(""), branch_id(""), query("");
+		this->_parse_cmd_line(cmdline, CONDITION, OPERATE_FACTOR_MODULE_ID, &module_id);
+		this->_parse_cmd_line(cmdline, CONDITION, OPERATE_FACTOR_BRANCH_ID, &branch_id);
+		this->_parse_cmd_line(cmdline, SUPPLEMENT, OPERATE_FACTOR_QUERYKEY, &query);
 
 	}
-	else if (operate_words.find("BRANCH") != string::npos) {
+	else if (operate_words.find(OPERATE_OBJECT_VARIABLE) != string::npos) {
 		
 	}
-	else if (operate_words.find("VARIABLE") != string::npos) {
-		
-	}
-	else if (operate_words.find("RELATE") != string::npos) {
+	else if (operate_words.find(OPERATE_OBJECT_RELATE) != string::npos) {
 		
 	}
 	return 0;
+}
+
+int ModelProcessor::Query_Module(std::string &cmdline, bool &retflag)
+{
+	retflag = true;
+	string module_id(""), description("");
+	this->_parse_cmd_line(cmdline, CONDITION, OPERATE_FACTOR_MODULE_ID, &module_id);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, OPERATE_FACTOR_QUERYKEY, &description);
+
+	TiXmlElement* module_x = nullptr;
+	this->modelptr->LocateModule(module_id.c_str(), &module_x);
+	if (module_x == NULL) {
+		this->IOport->WriteOut("ERROR:<module_id=" + module_id + "> module not exist.");
+		return -1;
+	}
+	this->IOport->WriteOut("SUCCESS:<module_id=" + module_id + "> query success.");
+	TiXmlElement* name_node = module_x->FirstChildElement(ELM_NAME_TAG);
+	this->IOport->WriteOut("{name=" + string(name_node->FirstChildElement()->Value()) + ";");
+
+	string branch_list("branch_list=[");
+	TiXmlElement* branch_node = module_x->FirstChildElement(BRANCH_COLLECTION_TAG)
+		->FirstChildElement(BRANCH_ELM_TAG);
+	while (branch_node != NULL) {
+		branch_list += branch_node->Attribute(BRANCH_ID_TAG);
+		branch_list += ",";
+		branch_node = branch_node->NextSiblingElement();
+	}
+	branch_list += "];";
+	this->IOport->WriteOut(branch_list);
+
+	string variable_list("variable_list=[");
+	TiXmlElement* variable_node = module_x->FirstChildElement(VAR_COLLECTION_TAG)
+		->FirstChildElement(VAR_ELM_TAG);
+	while (variable_node != NULL) {
+		variable_list += variable_node->Attribute(VAR_ID_TAG);
+		variable_list += ",";
+		variable_node = variable_node->NextSiblingElement();
+	}
+	variable_list += "];}";
+	this->IOport->WriteOut(variable_list);
+	retflag = false;
+	return {};
 }
 
 /*
@@ -379,19 +502,19 @@ int ModelProcessor::_update(std::string cmdline)
 	string operate_words = " ";
 	this->_parse_cmd_line(cmdline, OPERATE_WORDS, "", &operate_words);
 
-	if (operate_words.find("MODEL") != string::npos) {
+	if (operate_words.find(OPERATE_OBJECT_MODEL) != string::npos) {
 
 	}
-	else if (operate_words.find("MODULE") != string::npos) {
+	else if (operate_words.find(OPERATE_OBJECT_MODULE) != string::npos) {
 
 	}
-	else if (operate_words.find("BRANCH") != string::npos) {
+	else if (operate_words.find(OPERATE_OBJECT_BRANCH) != string::npos) {
 
 	}
-	else if (operate_words.find("VARIABLE") != string::npos) {
+	else if (operate_words.find(OPERATE_OBJECT_VARIABLE) != string::npos) {
 
 	}
-	else if (operate_words.find("RELATE") != string::npos) {
+	else if (operate_words.find(OPERATE_OBJECT_RELATE) != string::npos) {
 
 	}
 	return 0;
@@ -428,11 +551,11 @@ int ModelProcessor::_save_as(std::string cmdline)
 // 进入循环消息处理过程
 int ModelProcessor::Loop()
 {
-	string cmdline = "$$Process_Start";
+	string cmdline = PROCESS_START_MSG;
 
 	while (cmdline != PROCESS_EXIT_MSG)
 	{
-		if (cmdline == "$$Process_Start") {
+		if (cmdline == PROCESS_START_MSG) {
 			this->IOport->GetOneLine(&cmdline);
 			continue;
 		}
@@ -445,20 +568,20 @@ int ModelProcessor::Loop()
 		// process msg and writeout the result
 		string operate_words = cmdline.substr(0, cmdline.find(":"));
 
-		if (operate_words.find("ADD")!=string::npos)
+		if (operate_words.find(OPERATE_BEHAVE_ADD)!=string::npos)
 		{
 			this->_add(cmdline);
-		}else if (operate_words.find("REMOVE")!=string::npos)
+		}else if (operate_words.find(OPERATE_BEHAVE_REMOVE)!=string::npos)
 		{
 			this->_remove(cmdline);
-		}else if (operate_words.find("QUERY")!=string::npos)
+		}else if (operate_words.find(OPERATE_BEHAVE_QUERY)!=string::npos)
 		{
 			this->_query(cmdline);
-		}else if (operate_words.find("UPDATE")!=string::npos)
+		}else if (operate_words.find(OPERATE_BEHAVE_UPDATE)!=string::npos)
 		{
 			this->_update(cmdline);
 		}
-		else if (operate_words.find("SAVE_AS") != string::npos) {
+		else if (operate_words.find(OPERATE_BEHAVE_SAVE) != string::npos) {
 			this->_save_as(cmdline);
 		}
 		else {
@@ -469,7 +592,7 @@ int ModelProcessor::Loop()
 		this->IOport->GetOneLine(&cmdline);
 	}
 
-	this->IOport->WriteOut("$$Process_Exit");
+	this->IOport->WriteOut(PROCESS_EXIT_MSG);
 
 	return 0;
 }
@@ -487,7 +610,7 @@ int ModelProcessor::_parse_cmd_line(std::string cmdline, int kind, std::string k
 	case CONDITION: {
 			string condition_array = cmdline.substr(cmdline.find("(") + 1, cmdline.find(")")- cmdline.find("(")-1);
 			
-			if (condition_array == "NONE;") {
+			if (condition_array == OPERATE_FACTOR_NONE) {
 				*value = "";
 				return 0;
 			}
@@ -507,7 +630,7 @@ int ModelProcessor::_parse_cmd_line(std::string cmdline, int kind, std::string k
 	case SUPPLEMENT: {
 			string supplement = cmdline.substr(cmdline.find(")") + 1);
 
-			if (supplement == "NONE;") {
+			if (supplement == OPERATE_FACTOR_NONE) {
 				*value = "";
 				return 0;
 			}
