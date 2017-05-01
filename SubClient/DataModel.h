@@ -33,7 +33,7 @@ public:
 	// 根据指定的分支id，获取属于该分支的下一个节点，有状态方法
 	// 如果第一次调用该方法或者id与上次调用不同，模型从头遍历节点树，
 	// 如果两次调用相同，模型紧跟着上次结果取下一个节点。
-	virtual int LocateNextOneOfRelates(char* module_branch_map, TiXmlElement** relateRef);
+	virtual int LocateNextOneOfRelates(const char * module_branch_map, TiXmlElement** relateRef);
 private:
 	TiXmlElement* previousRelate;
 public:

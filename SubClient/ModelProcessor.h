@@ -110,6 +110,7 @@ RESULT:
 #include "BasicSupport.h"
 #include "DataModel.h"
 #include "OperateAccept.h"
+#include "BranchManage.h"
 
 
 class ModelProcessor
@@ -134,6 +135,7 @@ public:
 	int Remove_Branch(std::string &cmdline, bool &retflag);
 	int Remove_Module(std::string &cmdline, bool &retflag);
 	virtual int _query(std::string cmdline);
+	int Query_Branch(std::string &cmdline, bool &retflag);
 	int Query_Module(std::string &cmdline, bool &retflag);
 	virtual int _update(std::string cmdline);
 private:

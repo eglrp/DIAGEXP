@@ -42,6 +42,12 @@
     <ClInclude Include="StandardMacroDefined.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="BranchManage.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BranchSymbo.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OperateAccept.cpp">
@@ -72,6 +78,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="external.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BranchManage.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BranchSymbo.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

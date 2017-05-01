@@ -91,7 +91,7 @@ int DataModel::LocateRelate(const char* r_id, TiXmlElement** relateRef)
 
 
 // 根据指定的分支id，获取属于该分支的下一个节点，有状态方法
-int DataModel::LocateNextOneOfRelates(char* module_branch_map, TiXmlElement** relateRef)
+int DataModel::LocateNextOneOfRelates(const char * module_branch_map, TiXmlElement** relateRef)
 {
 	TiXmlElement* relateOne = nullptr;
 

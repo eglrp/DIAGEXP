@@ -431,11 +431,9 @@ int ModelProcessor::_query(std::string cmdline)
 		ERROR:<module_id=ada;branch_id=adf;> branch not exist.
 	*/
 	else if (operate_words.find(OPERATE_OBJECT_BRANCH) != string::npos) {
-		string module_id(""), branch_id(""), query("");
-		this->_parse_cmd_line(cmdline, CONDITION, OPERATE_FACTOR_MODULE_ID, &module_id);
-		this->_parse_cmd_line(cmdline, CONDITION, OPERATE_FACTOR_BRANCH_ID, &branch_id);
-		this->_parse_cmd_line(cmdline, SUPPLEMENT, OPERATE_FACTOR_QUERYKEY, &query);
-
+		bool retflag;
+		int retval = Query_Branch(cmdline, retflag);
+		if (retflag) return retval;
 	}
 	else if (operate_words.find(OPERATE_OBJECT_VARIABLE) != string::npos) {
 		
@@ -444,6 +442,69 @@ int ModelProcessor::_query(std::string cmdline)
 		
 	}
 	return 0;
+}
+
+int ModelProcessor::Query_Branch(std::string &cmdline, bool &retflag)
+{
+	retflag = true;
+	string module_id(""), branch_id(""), query("");
+	this->_parse_cmd_line(cmdline, CONDITION, OPERATE_FACTOR_MODULE_ID, &module_id);
+	this->_parse_cmd_line(cmdline, CONDITION, OPERATE_FACTOR_BRANCH_ID, &branch_id);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, OPERATE_FACTOR_QUERYKEY, &query);
+
+	TiXmlElement* module_ptr = nullptr;
+	this->modelptr->LocateModule(module_id.c_str(), &module_ptr);
+	if (module_ptr == NULL) {
+		this->IOport->WriteOut("ERROR:<" + string(OPERATE_FACTOR_MODULE_ID) + "="
+			+ module_id + ";> module not exist.");
+		return -1;
+	}
+
+	TiXmlElement* branch_ptr = nullptr;
+	this->modelptr->LocateBranch(module_ptr, branch_id.c_str(), &branch_ptr);
+	if (branch_ptr == NULL) {
+		this->IOport->WriteOut("ERROR:<" + string(OPERATE_FACTOR_MODULE_ID) + "="
+			+ module_id + ";" + OPERATE_FACTOR_BRANCH_ID + "=" + branch_id + ";> branch not exist.");
+		return -1;
+	}
+
+	string anwser("");
+	anwser += string("SUCCESS:<") + OPERATE_FACTOR_MODULE_ID + "=" + module_id + ";"
+		+ OPERATE_FACTOR_BRANCH_ID + "=" + branch_id + ";> query success.\n";
+	anwser += "{kind=" + query + ";\n";
+	anwser += "name=" + string(branch_ptr->FirstChildElement(ELM_NAME_TAG)->FirstChildElement()->Value()) + ";\n";
+
+
+	if (query == OPERATE_FACTOR_INTERFACE) {
+		TiXmlElement* inputElm = branch_ptr->FirstChildElement(BRANCH_INPUT_VAR_COLLECTION_TAG)
+			->FirstChildElement();// elm 开头的分支节点
+		TiXmlElement* outputElm = branch_ptr->FirstChildElement(BRANCH_OUTPUT_VAR_COLLECTION_TAG)
+			->FirstChildElement();
+
+		anwser += string(BRANCH_INPUT_VAR_COLLECTION_TAG) + "=[";
+		while (inputElm != NULL) {
+			anwser += inputElm->FirstChildElement()->Value() + string(",");
+		}
+		anwser += "];\n";
+
+		anwser += string(BRANCH_OUTPUT_VAR_COLLECTION_TAG) += "=[";
+		while (outputElm != NULL) {
+			anwser += outputElm->FirstChildElement()->Value() + string(",");
+		}
+		anwser += "];}";
+
+	}
+	else if (query == OPERATE_FACTOR_CONTENT) {
+		BranchManage* optr = new BranchManage();
+		optr->Init(this->modelptr);
+		optr->PrintOutBranchContent((module_id + MODULE_AND_BRANCH_OR_VAR_SPLIT
+			+ branch_id).c_str(), &anwser);
+		anwser += "}";
+	}
+
+	this->IOport->WriteOut(anwser);
+	retflag = false;
+	return {};
 }
 
 int ModelProcessor::Query_Module(std::string &cmdline, bool &retflag)
