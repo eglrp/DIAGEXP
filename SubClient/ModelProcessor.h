@@ -118,7 +118,7 @@ class ModelProcessor
 public:
 	ModelProcessor();
 	virtual ~ModelProcessor();
-	virtual int InitProcessor(DataModel* model, OperateAccept* IOport);
+	virtual int InitProcessor(DataModel* model, OperateAccept* ioPort);
 private:
 	DataModel* modelptr;
 public:
@@ -135,11 +135,12 @@ public:
 	int Remove_Branch(std::string &cmdline, bool &retflag);
 	int Remove_Module(std::string &cmdline, bool &retflag);
 	virtual int _query(std::string cmdline);
+	int Query_Variable(std::string &cmdline, bool &retflag);
 	int Query_Branch(std::string &cmdline, bool &retflag);
 	int Query_Module(std::string &cmdline, bool &retflag);
 	virtual int _update(std::string cmdline);
 private:
-	OperateAccept* IOport;
+	OperateAccept* ioPort;
 public:
 	// 进入循环消息处理过程
 	virtual int Loop();
