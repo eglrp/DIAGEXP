@@ -33,6 +33,9 @@
 #define RELATE_BRANCH_MAP_TAG "branch_map"
 #define RELATE_BEGIN "from"
 #define RELATE_END "to"
+#define RELATE_ELMPAIR_END "end"
+#define RELATE_ELMPAIR_BEGIN "begin"
+#define RELATE_ELMPAIR_ELM_TAG "emlpair"
 
 
 //操作与命令标准宏

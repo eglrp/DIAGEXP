@@ -135,6 +135,7 @@ public:
 	int Remove_Branch(std::string &cmdline, bool &retflag);
 	int Remove_Module(std::string &cmdline, bool &retflag);
 	virtual int _query(std::string cmdline);
+	int Query_Relate(std::string &cmdline, bool &retflag);
 	int Query_Variable(std::string &cmdline, bool &retflag);
 	int Query_Branch(std::string &cmdline, bool &retflag);
 	int Query_Module(std::string &cmdline, bool &retflag);

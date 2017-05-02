@@ -457,33 +457,49 @@ int ModelProcessor::_query(std::string cmdline)
 		{from=asdfasdf.asdkjalkj;
 		 to=asdfasf;
 		 branch_map=asdfadf.asdfad;
-		 elm:to.var_id=from.var_id;
-		 elm:to.varasd=from.vadfaf;}
+		 elmpair=[sdlf.sdfj:aljdf.asdlkf];
+		 elmpair=[sdlf.sdfj:aljdf.asdlkf];
 		ERROR:<relate_id=adfadf;> relate not exist.*/
 	else if (operate_words.find(OPERATE_OBJECT_RELATE) != string::npos) {
-		string relate_id("");
-		this->_parse_cmd_line(cmdline, CONDITION, OPERATE_FACTOR_RELATE_ID, &relate_id);
-
-		TiXmlElement* relate_ptr = nullptr;
-		this->modelptr->LocateRelate(relate_id.c_str(), &relate_ptr);
-		if (relate_ptr == NULL) {
-			this->ioPort->WriteOut("ERROR:<" OPERATE_FACTOR_RELATE_ID "="
-				+ relate_id + ";> relate not exist.");
-		}
-		string anwser("");
-		anwser += string("SUCCESS:<") + OPERATE_FACTOR_RELATE_ID + "=" + relate_id + ";> query success.\n";
-		anwser += string("{") + OPERATE_FACTOR_RELATE_FROM + "=" + relate_ptr->Attribute(RELATE_BEGIN) + ";\n";
-		anwser += string(OPERATE_FACTOR_RELATE_TO) + "=" + relate_ptr->Attribute(RELATE_END) + ";\n";
-		anwser += string(OPERATE_FACTOR_RELATE_BRANCH_MAP) + "=" + relate_ptr->Attribute(RELATE_BRANCH_MAP_TAG) + ";\n";
-		// elmpairÊä³ö
-
-
-
-
-
+		bool retflag;
+		int retval = Query_Relate(cmdline, retflag);
+		if (retflag) return retval;
 
 	}
 	return 0;
+}
+
+int ModelProcessor::Query_Relate(std::string &cmdline, bool &retflag)
+{
+	retflag = true;
+	string relate_id("");
+	this->_parse_cmd_line(cmdline, CONDITION, OPERATE_FACTOR_RELATE_ID, &relate_id);
+
+	TiXmlElement* relate_ptr = nullptr;
+	this->modelptr->LocateRelate(relate_id.c_str(), &relate_ptr);
+	if (relate_ptr == NULL) {
+		this->ioPort->WriteOut("ERROR:<" OPERATE_FACTOR_RELATE_ID "="
+			+ relate_id + ";> relate not exist.");
+		return -1;
+	}
+	string anwser("");
+	anwser += string("SUCCESS:<") + OPERATE_FACTOR_RELATE_ID + "=" + relate_id + ";> query success.\n";
+	anwser += string("{") + OPERATE_FACTOR_RELATE_FROM + "=" + relate_ptr->Attribute(RELATE_BEGIN) + ";\n";
+	anwser += string(OPERATE_FACTOR_RELATE_TO) + "=" + relate_ptr->Attribute(RELATE_END) + ";\n";
+	anwser += string(OPERATE_FACTOR_RELATE_BRANCH_MAP) + "=" + relate_ptr->Attribute(RELATE_BRANCH_MAP_TAG) + ";\n";
+	// elmpairÊä³ö
+	TiXmlElement* pair_ptr = relate_ptr->FirstChildElement(RELATE_ELMPAIR_ELM_TAG);
+	while (pair_ptr != NULL) {
+		anwser += string(RELATE_ELMPAIR_ELM_TAG "=[") + pair_ptr->Attribute(RELATE_ELMPAIR_END)
+			+ ":" + pair_ptr->FirstChildElement()->Value() + "];\n";
+
+		pair_ptr = pair_ptr->NextSiblingElement();
+	}
+	anwser += "}";
+
+	this->ioPort->WriteOut(anwser);
+	retflag = false;
+	return {};
 }
 
 int ModelProcessor::Query_Variable(std::string &cmdline, bool &retflag)
