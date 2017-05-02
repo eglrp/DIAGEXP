@@ -54,15 +54,18 @@ int BranchSymbo::DownstreamArrayRankClear(int previousRank, std::vector<std::str
 		avoidList = new vector<string>();
 	}
 
-	// 如果发现本节点的rank不为零，表示多分支经过此点，且已经经过了一次排序
-	// 如果本节点rank小于上一节点，表明存在回环
-	if (this->rank != 0) {
-		if (find(avoidList->begin(), avoidList->end(), this->node_id) != avoidList->end()) {
-			return DOWNSTREAM_ERROR;
-		}
+	// 查询是否重复经过本节点，如果是，返回错误代码，不继续执行
+	if (find(avoidList->begin(), avoidList->end(), this->node_id) != avoidList->end()) {
+		return DOWNSTREAM_ERROR;
+	}
+	
+	// 并没有形成节点回环，那么就开始计算节点等级
+	// 第一次或多次经过本节点，从节点排布上来算，本节点rank值必须大于调用方上级节点提供值
+	// 如果发现本节点值小于外部调用，则升值。
+	if (previousRank >= this->rank) {
+		this->rank = previousRank + 1;
 	}
 
-	this->rank = previousRank + 1;
 	avoidList->push_back(this->node_id);
 
 	map<string, BranchSymbo*>::iterator itptr;
@@ -83,15 +86,18 @@ int BranchSymbo::UpstreamArrayRankClear(int nextRank, std::vector<std::string>* 
 		avoidList = new vector<string>();
 	}
 
-	// 如果发现本节点的rank不为零，表示多分支经过此点，且已经经过了一次排序
-	// 如果本节点rank大于上一节点，表明存在回环
-	if (this->rank != 0) {
-		if (find(avoidList->begin(), avoidList->end(), this->node_id) != avoidList->end()) {
-			return UPSTREAM_ERROR;
-		}
+
+	if (find(avoidList->begin(), avoidList->end(), this->node_id) != avoidList->end()) {
+		return UPSTREAM_ERROR;
+	}
+	
+	// 开始计算节点等级，正常情况下，本函数是由下级节点调用，本节点rank值需要小于提供的nextrank
+	// 如果发现，本节点的提供的值大于调用方提供的值，则说明多分支经过本节点，且另一分支节点数少
+	// 需要降值,thisRank 需要变更为更小的值.
+	if (nextRank <= this->rank) {
+		this->rank = nextRank -1;
 	}
 
-	this->rank = nextRank -1;
 	avoidList->push_back(this->node_id);
 
 	map<string, BranchSymbo*>::iterator itptr;
@@ -120,6 +126,7 @@ int BranchSymbo::GetBranchNode_id(std::string* branchNode_id)
 
 
 // 打印branch内容到缓冲，一般rank_head节点调用函数，能够将整个分支打印出来
+// 方向自顶向下
 int BranchSymbo::PrintItSelfContent(std::string* stringBuf)
 {
 	// 最后一个end节点掠过
@@ -141,7 +148,11 @@ int BranchSymbo::PrintItSelfContent(std::string* stringBuf)
 		*stringBuf += string(BRANCH_RELATE_SYMBO) + "=" + it_ptr->first + ";\n";
 
 		// 以上确定了一个节点之后，继续以下一个节点为基准执行打印自身
-		it_ptr->second->PrintItSelfContent(stringBuf);
+		int child_rank = it_ptr->second->GetRank();
+		// 斩断节点回环
+		if (this->rank < child_rank) {
+			it_ptr->second->PrintItSelfContent(stringBuf);
+		}
 	}
 	return 0;
 }
