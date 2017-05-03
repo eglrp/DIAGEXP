@@ -118,7 +118,7 @@ int DataModel::LocateNextOneOfRelates(const char * module_branch_map, TiXmlEleme
 
 
 // 修改模型属性
-int DataModel::ModifyMainModule(char* value)
+int DataModel::ModifyMainModule(const char * value)
 {
 	this->RootElm->SetAttribute(MAINBRANCH_TAG, value);
 			

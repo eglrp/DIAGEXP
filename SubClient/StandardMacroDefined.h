@@ -42,6 +42,11 @@
 #define PROCESS_EXIT_MSG "$$Process_Exit"
 #define PROCESS_START_MSG "$$Process_Start"
 
+#define OPERATE_SUPPLEMENT_NAME "name"
+#define OPERATE_SUPPLEMENT_TYPE "type"
+#define OPERATE_SUPPLEMENT_INPUT "input"
+#define OPERATE_SUPPLEMENT_OUTPUT "output"
+
 #define OPERATE_FACTOR_MODULE_ID "module_id"
 #define OPERATE_FACTOR_MODULE_TYPE "module_type"
 #define OPERATE_FACTOR_BRANCH_ID "branch_id"
@@ -73,5 +78,6 @@
 #define BRANCH_RELATE_SYMBO "link_relate"
 
 #define MODULE_AND_BRANCH_OR_VAR_SPLIT "_"
+#define MODEL_MAINMODULE_TAG "mainbranch_map"
 
 #endif

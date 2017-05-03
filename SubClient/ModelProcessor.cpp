@@ -644,14 +644,32 @@ int ModelProcessor::Query_Module(std::string &cmdline, bool &retflag)
 	return {};
 }
 
+
+//注意：当字符串为空时，也会返回一个空字符串  
+void split(std::string& s, std::string& delim, std::vector< std::string >* ret)
+{
+	size_t start = 0;
+	size_t index = s.find_first_of(delim, start);
+	while (index != std::string::npos)
+	{
+		ret->push_back(s.substr(start, index - start));
+		start = index + 1;
+		index = s.find_first_of(delim, start);
+	}
+	if (index - start>0)
+	{
+		ret->push_back(s.substr(start, index - start));
+	}
+}
+
 /*
 COMMANDLINE UPDATE:
 	MODEL_UPDATE:		(NONE;)								mainmodule=asdfj;
 	MODULE_UPDATE:		(module_id=afaf;)					name=adfsf;
-	BRANCH_UPDATE:		(module_id=adff;branch_id=adfad;)	input(output)=[sdfjkd;skflsj;skdjfls;];
+	BRANCH_UPDATE:		(module_id=adff;branch_id=adfad;)	input(output)=[sdfjkd,skflsj,skdjfls,];
 	VARIABLE_UPDATE:	(module_id=adff;var_id=adfa;)		name=slkjf;
 						(module_id=asdf;var_id=sdfad;)		accessablily=branch/module/global;
-	RELATE_UPDATE:		(relate_id=adfad;)					elmap=[to.var1:somemodule.var2;];
+	RELATE_UPDATE:		(relate_id=adfad;)					elmap=[to.var1:somemodule.var2,];
 */
 int ModelProcessor::_update(std::string cmdline)
 {
@@ -659,13 +677,17 @@ int ModelProcessor::_update(std::string cmdline)
 	this->_parse_cmd_line(cmdline, OPERATE_WORDS, "", &operate_words);
 
 	if (operate_words.find(OPERATE_OBJECT_MODEL) != string::npos) {
-
+		Update_MainBranchMap(cmdline);
 	}
 	else if (operate_words.find(OPERATE_OBJECT_MODULE) != string::npos) {
-
+		bool retflag;
+		int retval = Update_Module(cmdline, retflag);
+		if (retflag) return retval;
 	}
 	else if (operate_words.find(OPERATE_OBJECT_BRANCH) != string::npos) {
-
+		bool retflag;
+		int retval = Update_Branch(cmdline, retflag);
+		if (retflag) return retval;
 	}
 	else if (operate_words.find(OPERATE_OBJECT_VARIABLE) != string::npos) {
 
@@ -674,6 +696,131 @@ int ModelProcessor::_update(std::string cmdline)
 
 	}
 	return 0;
+}
+
+int ModelProcessor::Update_Branch(std::string &cmdline, bool &retflag)
+{
+	retflag = true;
+	string name(""), input(""), output("");
+	string module_id(""), branch_id("");
+	this->_parse_cmd_line(cmdline, CONDITION, OPERATE_FACTOR_MODULE_ID, &module_id);
+	this->_parse_cmd_line(cmdline, CONDITION, OPERATE_FACTOR_BRANCH_ID, &branch_id);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, OPERATE_SUPPLEMENT_NAME, &name);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, OPERATE_SUPPLEMENT_INPUT, &input);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, OPERATE_SUPPLEMENT_OUTPUT, &output);
+
+	TiXmlElement* module_ptr = nullptr;
+	this->modelptr->LocateModule(module_id.c_str(), &module_ptr);
+	if (module_ptr == NULL) {
+		this->ioPort->WriteOut("ERROR:<" + string(OPERATE_FACTOR_MODULE_ID) + "="
+			+ module_id + ";> module not exist.");
+		return -1;
+	}
+
+	TiXmlElement* branch_ptr = nullptr;
+	this->modelptr->LocateBranch(module_ptr, branch_id.c_str(), &branch_ptr);
+	if (branch_ptr == NULL) {
+		this->ioPort->WriteOut("ERROR:<" + string(OPERATE_FACTOR_MODULE_ID) + "="
+			+ module_id + ";" + OPERATE_FACTOR_BRANCH_ID + "=" + branch_id + ";> branch not exist.");
+		return -1;
+	}
+
+	string anwser("SUCCESS:<" OPERATE_FACTOR_MODULE_ID "=");
+	anwser += module_id + ";" + OPERATE_FACTOR_BRANCH_ID + "=" + branch_id + ";> ";
+
+	if (name != "") {
+		TiXmlElement* name_ptr = branch_ptr->FirstChildElement(ELM_NAME_TAG)
+			->FirstChildElement();
+		name_ptr->SetValue(name.c_str());
+		anwser += string(OPERATE_SUPPLEMENT_NAME) + "=" + name + ";";
+	}
+
+	// [lsjf,alskjf,asdlfj,asdlkfj,sdkfj,asdkfj,]
+	if (input != "") {
+		TiXmlElement* input_ptr = branch_ptr->FirstChildElement(BRANCH_INPUT_VAR_COLLECTION_TAG);
+
+		TiXmlElement* input_nptr = new TiXmlElement(BRANCH_INPUT_VAR_COLLECTION_TAG);
+		input = input.substr(1, input.length() - 1);
+
+		vector<string> *container = new vector<string>();
+		split(input, string(","), container);
+
+		vector<string>::iterator itp = container->begin();
+		for (; itp != container->end(); ++itp) {
+			if (*itp != "") {
+				TiXmlElement* var_v = new TiXmlElement((*itp).c_str());
+				input_nptr->LinkEndChild(var_v);
+			}
+		}
+		input_ptr->Parent()->ReplaceChild(input_ptr, *input_nptr);
+	}
+
+	if (output != "") {
+		TiXmlElement* output_ptr = branch_ptr->FirstChildElement(BRANCH_OUTPUT_VAR_COLLECTION_TAG);
+
+		TiXmlElement* output_nptr = new TiXmlElement(BRANCH_OUTPUT_VAR_COLLECTION_TAG);
+		output = output.substr(1, output.length() - 1);
+
+		vector<string> *container = new vector<string>();
+		split(output, string(","), container);
+
+		vector<string>::iterator itp = container->begin();
+		for (; itp != container->end(); ++itp) {
+			if (*itp != "") {
+				TiXmlElement* var_v = new TiXmlElement((*itp).c_str());
+				output_nptr->LinkEndChild(var_v);
+			}
+		}
+		output_ptr->Parent()->ReplaceChild(output_ptr, *output_nptr);
+	}
+	retflag = false;
+	return {};
+}
+
+int ModelProcessor::Update_Module(std::string &cmdline, bool &retflag)
+{
+	retflag = true;
+	string module_id("");
+	this->_parse_cmd_line(cmdline, CONDITION, OPERATE_FACTOR_MODULE_ID, &module_id);
+	string name("");
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, OPERATE_SUPPLEMENT_NAME, &name);
+	string type("");
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, OPERATE_SUPPLEMENT_TYPE, &type);
+
+	TiXmlElement* module_ptr = nullptr;
+	this->modelptr->LocateModule(module_id.c_str(), &module_ptr);
+	if (module_ptr == NULL) {
+		this->ioPort->WriteOut(string("ERROR:<") + OPERATE_FACTOR_MODULE_ID + "=" + module_id + ";>"
+			+ "module not exist.");
+		return -1;
+	}
+
+	string anwser("SUCCESS:<" OPERATE_FACTOR_MODULE_ID "=");
+	anwser += string(module_id.c_str()) + ";> ";
+	if (name != "") {
+		TiXmlElement* name_ptr = module_ptr->FirstChildElement(ELM_NAME_TAG)->FirstChildElement();
+		name_ptr->SetValue(name.c_str());
+		anwser += string(OPERATE_SUPPLEMENT_NAME) + "=" + name + ";";
+	}
+
+	if (type != "") {
+		module_ptr->SetAttribute(MODULE_TYPE_TAG, type.c_str());
+		anwser += string(OPERATE_SUPPLEMENT_TYPE) + "=" + type + ";";
+	}
+
+	this->ioPort->WriteOut(anwser);
+	retflag = false;
+	return {};
+}
+
+void ModelProcessor::Update_MainBranchMap(std::string &cmdline)
+{
+	string mainmodule("");
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, MODEL_MAINMODULE_TAG, &mainmodule);
+
+	if (mainmodule != "") {
+		this->modelptr->ModifyMainModule(mainmodule.c_str());
+	}
 }
 
 

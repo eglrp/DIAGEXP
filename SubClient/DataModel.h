@@ -42,7 +42,7 @@ public:
 	// 添加relate节点
 	virtual int AddRelate(const char * relate_id, const char * branch_map, const char * from, const char * to);
 	// 修改模型属性
-	virtual int ModifyMainModule(char* value);
+	virtual int ModifyMainModule(const char * value);
 	// 添加branch节点，同其他节点要求一致，需要人工确保该节点的唯一性
 	virtual int AddBranch(TiXmlElement* mountable, const char * branch_id);
 	// 添加一个variable节点，人工确保唯一性
