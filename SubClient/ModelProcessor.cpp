@@ -798,7 +798,7 @@ int ModelProcessor::Update_Module(std::string &cmdline, bool &retflag)
 	string anwser("SUCCESS:<" OPERATE_FACTOR_MODULE_ID "=");
 	anwser += string(module_id.c_str()) + ";> ";
 	if (name != "") {
-		TiXmlElement* name_ptr = module_ptr->FirstChildElement(ELM_NAME_TAG)->FirstChildElement();
+		TiXmlText* name_ptr = (TiXmlText*)module_ptr->FirstChildElement(ELM_NAME_TAG)->FirstChild();
 		name_ptr->SetValue(name.c_str());
 		anwser += string(OPERATE_SUPPLEMENT_NAME) + "=" + name + ";";
 	}

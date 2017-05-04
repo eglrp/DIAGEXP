@@ -77,9 +77,6 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="external.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="BranchManage.cpp">
       <Filter>源文件</Filter>
     </ClCompile>

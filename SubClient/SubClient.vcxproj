@@ -147,7 +147,6 @@
     <ClCompile Include="BranchManage.cpp" />
     <ClCompile Include="BranchSymbo.cpp" />
     <ClCompile Include="DataModel.cpp" />
-    <ClCompile Include="external.cpp" />
     <ClCompile Include="FileOperate.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModelProcessor.cpp" />

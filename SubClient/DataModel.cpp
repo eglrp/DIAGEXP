@@ -217,7 +217,6 @@ int DataModel::AddRelate(const char * relate_id, const char * branch_map, const 
 // 打印模型自身，是一个测试方法，并非常用方法
 int DataModel::_print_itself()
 {
-	//dump_to_stdout(this->RootElm);
 	this->doc->Print();
 	return 0;
 }
