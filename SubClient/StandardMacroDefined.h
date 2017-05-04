@@ -46,6 +46,7 @@
 #define OPERATE_SUPPLEMENT_TYPE "type"
 #define OPERATE_SUPPLEMENT_INPUT "input"
 #define OPERATE_SUPPLEMENT_OUTPUT "output"
+#define OPERATE_SUPPLEMENT_ACCESSABLE "accessable"
 
 #define OPERATE_FACTOR_MODULE_ID "module_id"
 #define OPERATE_FACTOR_MODULE_TYPE "module_type"

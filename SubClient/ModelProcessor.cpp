@@ -690,12 +690,64 @@ int ModelProcessor::_update(std::string cmdline)
 		if (retflag) return retval;
 	}
 	else if (operate_words.find(OPERATE_OBJECT_VARIABLE) != string::npos) {
-
+		bool retflag;
+		int retval = Update_Variable(cmdline, retflag);
+		if (retflag) return retval;
 	}
 	else if (operate_words.find(OPERATE_OBJECT_RELATE) != string::npos) {
-
+		
 	}
 	return 0;
+}
+
+int ModelProcessor::Update_Variable(std::string &cmdline, bool &retflag)
+{
+	retflag = true;
+	string module_id(""), variable_id(""), type(""), accessable(""), name("");
+	this->_parse_cmd_line(cmdline, CONDITION, OPERATE_FACTOR_MODULE_ID, &module_id);
+	this->_parse_cmd_line(cmdline, CONDITION, OPERATE_FACTOR_BRANCH_ID, &variable_id);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, OPERATE_SUPPLEMENT_NAME, &name);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, OPERATE_SUPPLEMENT_TYPE, &type);
+	this->_parse_cmd_line(cmdline, SUPPLEMENT, OPERATE_SUPPLEMENT_ACCESSABLE, &accessable);
+
+	TiXmlElement* module_ptr = nullptr;
+	this->modelptr->LocateModule(module_id.c_str(), &module_ptr);
+	if (module_ptr == NULL) {
+		this->ioPort->WriteOut("ERROR:<" + string(OPERATE_FACTOR_MODULE_ID) + "="
+			+ module_id + ";> module not exist.");
+		return -1;
+	}
+
+	TiXmlElement* variable_ptr = nullptr;
+	this->modelptr->LocateVariable(module_ptr, variable_id.c_str(), &variable_ptr);
+	if (variable_ptr == NULL) {
+		this->ioPort->WriteOut("ERROR:<" + string(OPERATE_FACTOR_MODULE_ID) + "="
+			+ module_id + ";" + OPERATE_FACTOR_VARIABLE_ID + "=" + variable_id + ";> variable not exist.");
+		return -1;
+	}
+	string anwser("SUCCESS:<" OPERATE_FACTOR_MODULE_ID "=");
+	anwser += module_id + ";" + OPERATE_FACTOR_VARIABLE_ID + "=" + variable_id + ";> ";
+
+	if (name != "") {
+		TiXmlText* name_ptr = (TiXmlText*)variable_ptr->FirstChildElement(ELM_NAME_TAG)
+			->FirstChild();
+		name_ptr->SetValue(name.c_str());
+		anwser += string(OPERATE_SUPPLEMENT_NAME) + "=" + name + ";";
+	}
+
+	if (type != "") {
+		variable_ptr->SetAttribute(VAR_TYPE_TAG, type.c_str());
+		anwser += string(OPERATE_SUPPLEMENT_TYPE) + "=" + type + ";";
+	}
+
+	if (accessable != "") {
+		variable_ptr->SetAttribute(VAR_ACCESSABLE, accessable.c_str());
+		anwser += string(OPERATE_SUPPLEMENT_ACCESSABLE) + "=" + accessable + ";";
+	}
+
+	this->ioPort->WriteOut(anwser);
+	retflag = false;
+	return {};
 }
 
 int ModelProcessor::Update_Branch(std::string &cmdline, bool &retflag)
@@ -729,8 +781,8 @@ int ModelProcessor::Update_Branch(std::string &cmdline, bool &retflag)
 	anwser += module_id + ";" + OPERATE_FACTOR_BRANCH_ID + "=" + branch_id + ";> ";
 
 	if (name != "") {
-		TiXmlElement* name_ptr = branch_ptr->FirstChildElement(ELM_NAME_TAG)
-			->FirstChildElement();
+		TiXmlText* name_ptr = (TiXmlText*)branch_ptr->FirstChildElement(ELM_NAME_TAG)
+			->FirstChild();
 		name_ptr->SetValue(name.c_str());
 		anwser += string(OPERATE_SUPPLEMENT_NAME) + "=" + name + ";";
 	}

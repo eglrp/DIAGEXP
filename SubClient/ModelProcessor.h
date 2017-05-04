@@ -140,6 +140,7 @@ public:
 	int Query_Branch(std::string &cmdline, bool &retflag);
 	int Query_Module(std::string &cmdline, bool &retflag);
 	virtual int _update(std::string cmdline);
+	int Update_Variable(std::string &cmdline, bool &retflag);
 	int Update_Branch(std::string &cmdline, bool &retflag);
 	int Update_Module(std::string &cmdline, bool &retflag);
 	void Update_MainBranchMap(std::string &cmdline);
