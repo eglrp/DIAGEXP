@@ -667,7 +667,7 @@ COMMANDLINE UPDATE:
 	MODEL_UPDATE:		(NONE;)								mainmodule=asdfj;
 	MODULE_UPDATE:		(module_id=afaf;)					name=adfsf;
 	BRANCH_UPDATE:		(module_id=adff;branch_id=adfad;)	input(output)=[sdfjkd,skflsj,skdjfls,];
-	VARIABLE_UPDATE:	(module_id=adff;var_id=adfa;)		name=slkjf;
+	VARIABLE_UPDATE:	(module_id=adff;var_id=adfa;)		name=slkjf;type=aldjfa;
 						(module_id=asdf;var_id=sdfad;)		accessablily=branch/module/global;
 	RELATE_UPDATE:		(relate_id=adfad;)					elmap=[to.var1:somemodule.var2,];
 */

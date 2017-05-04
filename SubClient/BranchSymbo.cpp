@@ -130,7 +130,7 @@ int BranchSymbo::GetBranchNode_id(std::string* branchNode_id)
 int BranchSymbo::PrintItSelfContent(std::string* stringBuf)
 {
 	// 最后一个end节点掠过
-	if (this->downstreamNodeC->size == 0)
+	if (this->downstreamNodeC->size() == 0)
 		return 0;
 
 
