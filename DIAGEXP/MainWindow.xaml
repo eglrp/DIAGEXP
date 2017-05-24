@@ -5,8 +5,41 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DIAGEXP"
         mc:Ignorable="d"
-        Title="DIAGEXP" Height="900" Width="1600">
-    <Grid>
-        
+        Title="DIAGEXP" Height="500" Width="800">
+    <Grid UseLayoutRounding="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="80*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="554*"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.ColumnSpan="3">
+            <MenuItem Header="_File" Margin="0">
+                <MenuItem Header="Exit" HorizontalAlignment="Left" Width="144"/>
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="AboutSoftware" HorizontalAlignment="Left" Width="144"/>
+            </MenuItem>
+        </Menu>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <Canvas Margin="0"/>
+        </ScrollViewer>
+        <GridSplitter Grid.Column="1" Grid.Row="1" Width="5" HorizontalAlignment="Stretch"/>
+        <ScrollViewer Grid.Column="2" Grid.Row="1">
+            <StackPanel Grid.Column="2" Grid.Row="1">
+                <Expander Header="通用控件">
+                    <Grid Background="#FF6276B9" Height="400"/>
+                </Expander>
+                <Expander Header="可见控件">
+                    <Grid Background="#FF912F2F" Height="400"/>
+                </Expander>
+                <Expander Header="全部控件">
+                    <Grid Background="#FF3BBD59" Height="400"/>
+                </Expander>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>
