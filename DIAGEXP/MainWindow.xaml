@@ -24,9 +24,6 @@
                 <MenuItem Header="AboutSoftware" HorizontalAlignment="Left" Width="144"/>
             </MenuItem>
         </Menu>
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-            <Canvas Margin="0"/>
-        </ScrollViewer>
         <GridSplitter Grid.Column="1" Grid.Row="1" Width="5" HorizontalAlignment="Stretch"/>
         <ScrollViewer Grid.Column="2" Grid.Row="1">
             <StackPanel Grid.Column="2" Grid.Row="1">
@@ -37,9 +34,21 @@
                     <Grid Background="#FF912F2F" Height="400"/>
                 </Expander>
                 <Expander Header="全部控件">
-                    <Grid Background="#FF3BBD59" Height="400"/>
+                    <Grid Background="#FF3BBD59" Height="400">
+                        <Button Content="放大100" HorizontalAlignment="Left" Margin="34,64,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+                        <Button Content="缩小100" HorizontalAlignment="Left" Margin="84,145,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+                    </Grid>
                 </Expander>
             </StackPanel>
+        </ScrollViewer>
+        <ScrollViewer Grid.Row="1" Name="ScrollOperation" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Grid Name="BaseP" ShowGridLines="True" Width="10000" Height="10000">
+                <Viewbox>
+                    <Canvas Background="White" Height="10000" Width="10000">
+                        <Rectangle Fill="#FFF4F4F5" Height="20" Canvas.Left="47" Stroke="Black" Canvas.Top="37" Width="80"/>
+                    </Canvas>
+                </Viewbox>
+            </Grid>
         </ScrollViewer>
     </Grid>
 </Window>

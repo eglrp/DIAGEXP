@@ -23,6 +23,20 @@ namespace DIAGEXP
         public MainWindow()
         {
             InitializeComponent();
+            ScrollOperation.ScrollToHorizontalOffset(BaseP.Width/2);
+            ScrollOperation.ScrollToVerticalOffset(BaseP.Height/2);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            BaseP.Width = BaseP.Width * 10;
+            BaseP.Height = BaseP.Height*10;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            BaseP.Width = BaseP.Width / 10;
+            BaseP.Height = BaseP.Height / 10;
         }
     }
 }
