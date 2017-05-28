@@ -23,8 +23,8 @@ namespace DIAGEXP
         public MainWindow()
         {
             InitializeComponent();
-            ScrollOperation.ScrollToHorizontalOffset(BaseP.Width/2);
-            ScrollOperation.ScrollToVerticalOffset(BaseP.Height/2);
+            ScrollOperation.ScrollToHorizontalOffset(BaseP.Width/5);
+            ScrollOperation.ScrollToVerticalOffset(BaseP.Height/5);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -37,6 +37,12 @@ namespace DIAGEXP
         {
             BaseP.Width = BaseP.Width / 10;
             BaseP.Height = BaseP.Height / 10;
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Window about = new AboutWindows();
+            about.ShowDialog();
         }
     }
 }

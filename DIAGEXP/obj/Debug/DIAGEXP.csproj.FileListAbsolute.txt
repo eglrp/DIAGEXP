@@ -12,3 +12,5 @@ E:\Project_Software\Project_VS2017\DIAGEXP\DIAGEXP\obj\Debug\DIAGEXP.Properties.
 E:\Project_Software\Project_VS2017\DIAGEXP\DIAGEXP\obj\Debug\DIAGEXP.csproj.GenerateResource.Cache
 E:\Project_Software\Project_VS2017\DIAGEXP\DIAGEXP\obj\Debug\DIAGEXP.exe
 E:\Project_Software\Project_VS2017\DIAGEXP\DIAGEXP\obj\Debug\DIAGEXP.pdb
+E:\Project_Software\Project_VS2017\DIAGEXP\DIAGEXP\obj\Debug\AboutWindows.g.cs
+E:\Project_Software\Project_VS2017\DIAGEXP\DIAGEXP\obj\Debug\AboutWindows.baml

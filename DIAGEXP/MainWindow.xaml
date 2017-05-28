@@ -21,7 +21,7 @@
                 <MenuItem Header="Exit" HorizontalAlignment="Left" Width="144"/>
             </MenuItem>
             <MenuItem Header="_Help">
-                <MenuItem Header="AboutSoftware" HorizontalAlignment="Left" Width="144"/>
+                <MenuItem Header="AboutSoftware" HorizontalAlignment="Left" Width="144" Click="MenuItem_Click"/>
             </MenuItem>
         </Menu>
         <GridSplitter Grid.Column="1" Grid.Row="1" Width="5" HorizontalAlignment="Stretch"/>
