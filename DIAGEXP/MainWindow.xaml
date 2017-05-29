@@ -6,6 +6,30 @@
         xmlns:local="clr-namespace:DIAGEXP"
         mc:Ignorable="d"
         Title="DIAGEXP" Height="500" Width="800">
+    <Window.Resources>
+        <DataTemplate x:Key="BranchItemTemplate">
+            <Grid Height="Auto" Width="Auto" Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="202*"/>
+                </Grid.ColumnDefinitions>
+                <Rectangle Fill="#FFF4F4F5" Stroke="Black" Grid.ColumnSpan="3" RadiusX="8" RadiusY="8" Grid.RowSpan="2"/>
+                <TextBlock TextWrapping="Wrap" Text="{Binding Path=BranchName}" Grid.ColumnSpan="3" Margin="10,5"/>
+                <TextBlock TextWrapping="Wrap" Text="{Binding Path=ItemID}" Grid.ColumnSpan="3" Margin="10,5" Grid.Row="1"/>
+                <TextBlock Grid.Row="2" TextWrapping="Wrap" Text="Static?"/>
+                <TextBlock Grid.Row="2" TextWrapping="Wrap" Text="{Binding Path=StaticV}" Grid.Column="1"/>
+                <TextBlock Grid.Column="2" Grid.Row="2" TextWrapping="Wrap" Text="{Binding Path=Animation}"/>
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+
+
     <Grid UseLayoutRounding="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200*"/>
@@ -19,24 +43,34 @@
         <Menu Grid.ColumnSpan="3">
             <MenuItem Header="_File" Margin="0">
                 <MenuItem Header="Exit" HorizontalAlignment="Left" Width="144"/>
+                <Separator HorizontalAlignment="Left" Height="2" Width="144"/>
+                <MenuItem Header="AddItem" HorizontalAlignment="Left" Width="144" Click="MenuItem_Click"/>
             </MenuItem>
             <MenuItem Header="_Help">
-                <MenuItem Header="AboutSoftware" HorizontalAlignment="Left" Width="144" Click="MenuItem_Click"/>
+                <MenuItem Header="AboutSoftware" HorizontalAlignment="Left" Width="144" Click="GiveOutAAboutWindow"/>
             </MenuItem>
         </Menu>
         <GridSplitter Grid.Column="1" Grid.Row="1" Width="5" HorizontalAlignment="Stretch"/>
         <ScrollViewer Grid.Column="2" Grid.Row="1">
             <StackPanel Grid.Column="2" Grid.Row="1">
-                <Expander Header="通用控件">
-                    <Grid Background="#FF6276B9" Height="400"/>
+                <Expander Header="新建本模块分支">
+                    <Grid Background="#FF6276B9">
+                        <ListBox Name="NewBranchTypeList" HorizontalContentAlignment="Stretch"
+                                 ItemTemplate="{StaticResource BranchItemTemplate}"/>
+                    </Grid>
                 </Expander>
-                <Expander Header="可见控件">
-                    <Grid Background="#FF912F2F" Height="400"/>
+                <Expander Header="可见模块分支">
+                    <Grid Background="#FF6276B9">
+                        <ListBox Name="VisiableBranchCollection" HorizontalContentAlignment="Stretch"
+                                 ItemTemplate="{StaticResource BranchItemTemplate}"/>
+                    </Grid>
                 </Expander>
-                <Expander Header="全部控件">
-                    <Grid Background="#FF3BBD59" Height="400">
-                        <Button Content="放大100" HorizontalAlignment="Left" Margin="34,64,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-                        <Button Content="缩小100" HorizontalAlignment="Left" Margin="84,145,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+                <Expander Header="全部模块分支">
+                    <Grid Background="#FF6276B9" Height="800">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                            <ListBox Name="AllBranchCollection" HorizontalContentAlignment="Stretch"
+                                 ItemTemplate="{StaticResource BranchItemTemplate}"/>
+                        </ScrollViewer>
                     </Grid>
                 </Expander>
             </StackPanel>
