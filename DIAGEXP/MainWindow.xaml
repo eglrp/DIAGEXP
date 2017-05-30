@@ -76,7 +76,7 @@
             </StackPanel>
         </ScrollViewer>
         <ScrollViewer Grid.Row="1" Name="ScrollOperation" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <Grid Name="BaseP" ShowGridLines="True" Width="10000" Height="10000">
+            <Grid Name="BaseP" ShowGridLines="True" Width="10000" Height="10000" MouseWheel="wheelProc">
                 <Viewbox>
                     <Canvas Background="White" Height="10000" Width="10000">
                         <Rectangle Fill="#FFF4F4F5" Height="20" Canvas.Left="47" Stroke="Black" Canvas.Top="37" Width="80"/>

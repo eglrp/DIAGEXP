@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Input;
 
 namespace DIAGEXP
 {
@@ -45,9 +46,49 @@ namespace DIAGEXP
         {
             visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
             visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
             allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
             allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
         }
+
+        private void wheelProc(object sender, MouseWheelEventArgs e)
+        {
+            if((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            {
+                int num = e.Delta;
+                BaseP.Width = BaseP.Width + num;
+                BaseP.Height = BaseP.Height + num;
+                e.Handled = true;
+            }
+        }
+        
     }
 
 

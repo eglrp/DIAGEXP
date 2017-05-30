@@ -11,8 +11,8 @@
             <RowDefinition Height="230*"/>
             <RowDefinition Height="38"/>
         </Grid.RowDefinitions>
-        <TextBox TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" >创造者WS</TextBox>
-        <StackPanel Grid.Row="1" FlowDirection="RightToLeft" Orientation="Horizontal">
+        <TextBlock TextWrapping="Wrap" >创造者WS</TextBlock>
+        <StackPanel Grid.Row="1" FlowDirection="RightToLeft" Orientation="Horizontal" Background="#FFEAE8E8">
             <Button Content="Close" VerticalAlignment="Center" Width="70" Margin="20,0,0,0" Click="Button_Click"/>
             <Button Content="OK" VerticalAlignment="Center" Width="70" Margin="20,0,0,0"/>
         </StackPanel>
