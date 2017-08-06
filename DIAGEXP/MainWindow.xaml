@@ -56,7 +56,7 @@
                 <Expander Header="新建本模块分支">
                     <Grid Background="#FF6276B9">
                         <ListBox Name="NewBranchTypeList" HorizontalContentAlignment="Stretch"
-                                 ItemTemplate="{StaticResource BranchItemTemplate}"/>
+                                 ItemTemplate="{StaticResource BranchItemTemplate}" MouseRightButtonDown="temp_use4check"/>
                     </Grid>
                 </Expander>
                 <Expander Header="可见模块分支">

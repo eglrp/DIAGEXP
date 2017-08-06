@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace DIAGEXP
@@ -88,7 +89,12 @@ namespace DIAGEXP
                 e.Handled = true;
             }
         }
-        
+
+        private void temp_use4check(object sender, MouseButtonEventArgs e)
+        {
+            BranchRecord selected = (sender as ListBox).SelectedItem as BranchRecord;
+            MessageBox.Show("I am");
+        }
     }
 
 
