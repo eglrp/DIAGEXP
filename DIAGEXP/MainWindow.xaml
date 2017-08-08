@@ -38,51 +38,85 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="554*"/>
+            <RowDefinition Height="302*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="140*"/>
         </Grid.RowDefinitions>
         <Menu Grid.ColumnSpan="3">
             <MenuItem Header="_File" Margin="0">
                 <MenuItem Header="Exit" HorizontalAlignment="Left" Width="144"/>
                 <Separator HorizontalAlignment="Left" Height="2" Width="144"/>
-                <MenuItem Header="AddItem" HorizontalAlignment="Left" Width="144" Click="MenuItem_Click"/>
             </MenuItem>
             <MenuItem Header="_Help">
                 <MenuItem Header="AboutSoftware" HorizontalAlignment="Left" Width="144" Click="GiveOutAAboutWindow"/>
             </MenuItem>
+            <MenuItem Header="_Test">
+                <MenuItem Header="AddItem" HorizontalAlignment="Left" Width="144" Click="MenuItem_Click"/>
+                <MenuItem Header="AddText" HorizontalAlignment="Left" Width="144" Click="MenuItem_Click_1"/>
+                <MenuItem Header="AddArrow" HorizontalAlignment="Left" Width="144" Click="AddArrow"/>
+            </MenuItem>
         </Menu>
-        <GridSplitter Grid.Column="1" Grid.Row="1" Width="5" HorizontalAlignment="Stretch"/>
-        <ScrollViewer Grid.Column="2" Grid.Row="1">
-            <StackPanel Grid.Column="2" Grid.Row="1">
-                <Expander Header="新建本模块分支">
-                    <Grid Background="#FF6276B9">
-                        <ListBox Name="NewBranchTypeList" HorizontalContentAlignment="Stretch"
-                                 ItemTemplate="{StaticResource BranchItemTemplate}" MouseRightButtonDown="temp_use4check"/>
-                    </Grid>
-                </Expander>
-                <Expander Header="可见模块分支">
-                    <Grid Background="#FF6276B9">
-                        <ListBox Name="VisiableBranchCollection" HorizontalContentAlignment="Stretch"
-                                 ItemTemplate="{StaticResource BranchItemTemplate}"/>
-                    </Grid>
-                </Expander>
-                <Expander Header="全部模块分支">
-                    <Grid Background="#FF6276B9" Height="800">
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                            <ListBox Name="AllBranchCollection" HorizontalContentAlignment="Stretch"
-                                 ItemTemplate="{StaticResource BranchItemTemplate}"/>
-                        </ScrollViewer>
-                    </Grid>
-                </Expander>
-            </StackPanel>
-        </ScrollViewer>
+        <GridSplitter Grid.Column="1" Grid.Row="1" Width="5" HorizontalAlignment="Stretch" Grid.RowSpan="3"/>
+        <TabControl Grid.Column="2" Grid.Row="1" Grid.RowSpan="3">
+            <TabItem Header="节点清单">
+                <ScrollViewer Background="#FFE5E5E5">
+                    <StackPanel Grid.Column="2" Grid.Row="1">
+                        <Expander Header="新建本模块分支" Background="#FFFBFBFB" >
+                            <Grid Background="#FF6276B9">
+                                <ListBox Name="NewBranchTypeList" HorizontalContentAlignment="Stretch"
+                                 ItemTemplate="{StaticResource BranchItemTemplate}" MouseRightButtonUp="Visual_MouseUp"/>
+                            </Grid>
+                        </Expander>
+                        <Expander Header="可见模块分支" Background="#FFFBFBFB" >
+                            <Grid Background="#FF6276B9">
+                                <ListBox Name="VisiableBranchCollection" HorizontalContentAlignment="Stretch"
+                                 ItemTemplate="{StaticResource BranchItemTemplate}" MouseRightButtonUp="Visual_MouseUp"/>
+                            </Grid>
+                        </Expander>
+                        <Expander Header="全部模块分支" Background="#FFFBFBFB">
+                            <Grid Background="#FF6276B9" Height="800">
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                    <ListBox Name="AllBranchCollection" HorizontalContentAlignment="Stretch"
+                                 ItemTemplate="{StaticResource BranchItemTemplate}" MouseRightButtonUp="Visual_MouseUp"/>
+                                </ScrollViewer>
+                            </Grid>
+                        </Expander>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
         <ScrollViewer Grid.Row="1" Name="ScrollOperation" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid Name="BaseP" ShowGridLines="True" Width="10000" Height="10000" MouseWheel="wheelProc">
                 <Viewbox>
-                    <Canvas Background="White" Height="10000" Width="10000">
+                    <Canvas Background="White" Height="10000" Width="10000" Name="DrawArea">
                         <Rectangle Fill="#FFF4F4F5" Height="20" Canvas.Left="47" Stroke="Black" Canvas.Top="37" Width="80"/>
+                        <Polygon Fill="Blue" Stroke="Blue" StrokeThickness="1" Canvas.Left="200" Canvas.Top="100" FillRule="Nonzero"
+                                 Points="4,0 4,100 0,100 6,108 12,100 8,100 8,0"/>
                     </Canvas>
                 </Viewbox>
             </Grid>
         </ScrollViewer>
+        <GridSplitter HorizontalAlignment="Stretch" Height="5" Grid.Row="2" ResizeDirection="Rows" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
+        <TabControl Grid.Row="3" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <TabItem Header="自动输出">
+                <Grid Background="#FFE5E5E5">
+                    <ScrollViewer>
+                        <TextBox Name="AutoOutputTab" TextWrapping="Wrap" Text="自动输出"/>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="节点详情">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="连接详情">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="参数详情">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="自动输出">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

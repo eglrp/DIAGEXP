@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace DIAGEXP
 {
@@ -14,6 +16,7 @@ namespace DIAGEXP
     {
         private ObservableCollection<BranchRecord> visiableRecordC = new ObservableCollection<BranchRecord>();
         private ObservableCollection<BranchRecord> allRecordC = new ObservableCollection<BranchRecord>();
+        private string selectedID = null;
 
         public MainWindow()
         {
@@ -35,49 +38,11 @@ namespace DIAGEXP
         private List<BranchRecord> getBranchTypeCollection()
         {
             List<BranchRecord> some = new List<BranchRecord>();
-            some.Add(new BranchRecord("alsklsdjfa.asldfkajsdlkf","this.One", "yes!!", "注释信息for ONE", "rectangle"));
-            some.Add(new BranchRecord("alskdfasdf.slkdjflaksjdf","this.Two", "yes!!", "注释信息for TWO", "rectangle"));
-            some.Add(new BranchRecord("alskdfasdf.sdlkfalskdjfk","this.Three", "no!!", "注释信息for THREE", "rectangle"));
-            some.Add(new BranchRecord("alskdfalsd.asldkfjalkdjf","this.Four", "no!!", "注释信息for FOUR", "rectangle"));
-            some.Add(new BranchRecord("alskdfasdf.asdlfkasldkff","this.Five", "no!!", "注释信息for FIVE", "rectangle"));
+            some.Add(new BranchRecord("this.regular","RegularNode", "yes!!", "普通过程", "rectangle"));
+            some.Add(new BranchRecord("this.judge","Switch&Judge", "yes!!", "分支判定", "rectangle"));
             return some;
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
-        }
 
         private void wheelProc(object sender, MouseWheelEventArgs e)
         {
@@ -90,10 +55,48 @@ namespace DIAGEXP
             }
         }
 
-        private void temp_use4check(object sender, MouseButtonEventArgs e)
+        private void Visual_MouseUp(object sender, MouseButtonEventArgs e)
         {
             BranchRecord selected = (sender as ListBox).SelectedItem as BranchRecord;
-            MessageBox.Show("I am");
+            if (selected == null)
+                return;
+
+            this.selectedID = selected.ItemID;
+            MessageBox.Show("RBClick");
+        }
+        
+        private void appendText(string xx)
+        {
+            AutoOutputTab.Text += xx + "\n";
+        }
+
+        //---------------------------以下为测试用程序，以上为正式函数--------------------------
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.appendText("what fuckljdlakjdf");
+        }
+        //添加节点的实例程序，成品不应该出现这些代码
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            visiableRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+            allRecordC.Add(new BranchRecord("aldjfasf", "asldkfjalskdjf", "no!!", "zhushixinxi", "rectangle"));
+        }
+
+        private void AddArrow(object sender, RoutedEventArgs e)
+        {
+            ArrowsShape one = new ArrowsShape(Brushes.Blue, new Point(4, 7), new Point(200, 300));
+            DrawArea.Children.Add(one.GetPolygonShape());
+            Canvas.SetLeft(one.GetPolygonShape(), 0);
+            Canvas.SetTop(one.GetPolygonShape(), 0);
         }
     }
 
@@ -155,6 +158,84 @@ namespace DIAGEXP
             BranchName = branchName;
             Animation = animation;
             ShapeType = shapeType;
+        }
+    }
+
+    public class ArrowsShape
+    {
+        private Point start,end;
+        private Brush fillBrush;
+        private Polygon shape;
+
+        public ArrowsShape(Brush ColorBrush,Point start, Point end)
+        {
+            this.fillBrush = ColorBrush;
+            this.start = start;
+            this.end = end;
+        }
+
+        public void ChangePosition(Point newStart, Point newEnd)
+        {
+            if (newStart == null && newEnd == null)
+                return;
+
+            if(newStart != null)
+            {
+                this.start = newStart;
+            }
+            if(newEnd != null)
+            {
+                this.end = newEnd;
+            }
+
+            this.shape.Points.Clear();
+            this.shape.Points.Add(new Point((start.X - 2), start.Y));
+            this.shape.Points.Add(new Point((end.X - 2), (end.Y - 8)));
+            this.shape.Points.Add(new Point((end.X - 6), (end.Y - 8)));
+            this.shape.Points.Add(this.end);
+            this.shape.Points.Add(new Point((end.X + 6), (end.Y - 8)));
+            this.shape.Points.Add(new Point((end.X + 2), (end.Y - 8)));
+            this.shape.Points.Add(new Point((start.X + 2), start.Y));
+        }
+
+        public Polygon GetPolygonShape()
+        {
+            shape = new Polygon{ StrokeThickness = 1, Fill = this.fillBrush };
+
+            this.shape.Points.Add(new Point((start.X - 2), start.Y));
+            this.shape.Points.Add(new Point((end.X - 2), (end.Y - 8)));
+            this.shape.Points.Add(new Point((end.X - 6), (end.Y - 8)));
+            this.shape.Points.Add(this.end);
+            this.shape.Points.Add(new Point((end.X + 6), (end.Y - 8)));
+            this.shape.Points.Add(new Point((end.X + 2), (end.Y - 8)));
+            this.shape.Points.Add(new Point((start.X + 2), start.Y));
+
+            shape.MouseLeftButtonDown += Arrows_MouseLBDown;
+
+            return this.shape;
+        }
+
+        private void Arrows_MouseLBDown(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("Arrows_Click_1");
+        }
+    }
+
+    public class NodeShape
+    {
+        private List<ArrowsShape> positiveC = new List<ArrowsShape>();
+        private List<ArrowsShape> negativeC = new List<ArrowsShape>();
+
+        public NodeShape() { }
+
+        public void AddPositiveBinding(ArrowsShape o)
+        {
+            this.positiveC.Add(o);
+        }
+
+        public void AddNegativeBinding(ArrowsShape o)
+        {
+            this.negativeC.Add(o);
         }
     }
 }
